@@ -5,8 +5,10 @@ import Avatar from './Avatar'
 export default function Account({ session }) {
   const [loading, setLoading] = useState(true)
   const [username, setUsername] = useState(null)
-  const [website, setWebsite] = useState(null)
   const [avatar_url, setAvatarUrl] = useState(null)
+  const [year, setYear] = useState(null)
+  const [user_email, setEmail] = useState(null)
+  const [field_of_study, setFieldOfStudy] = useState(null)
 
   useEffect(() => {
     async function getProfile() {
@@ -16,7 +18,7 @@ export default function Account({ session }) {
 
         let { data, error } = await supabase
           .from('profiles')
-          .select(`username, website, avatar_url`)
+          .select(`username, avatar_url, year, field_of_study, user_email`)
           .eq('id', user.id)
           .single()
 
@@ -25,8 +27,10 @@ export default function Account({ session }) {
         }
 
         setUsername(data.username)
-        setWebsite(data.website)
         setAvatarUrl(data.avatar_url)
+        setYear(data.year)
+        setEmail(data.user_email)
+        setFieldOfStudy(data.field_of_study)
       } catch (error) {
         console.warn(error.message)
       } finally {
@@ -37,7 +41,7 @@ export default function Account({ session }) {
     getProfile()
   }, [session])
 
-  async function updateProfile({ username, website, avatar_url }) {
+  async function updateProfile({ username, avatar_url, year, field_of_study, user_email}) {
     try {
       setLoading(true)
       const { user } = session
@@ -45,8 +49,10 @@ export default function Account({ session }) {
       const updates = {
         id: user.id,
         username,
-        website,
         avatar_url,
+        year,
+        field_of_study,
+        user_email, 
         updated_at: new Date(),
       }
 
@@ -56,7 +62,11 @@ export default function Account({ session }) {
         throw error
       }
     } catch (error) {
-      alert(error.message)
+      if (error.message.includes("email_check")){
+        alert('Only @case.edu email addresses are allowed. Please enter valid email')
+      }else{
+        alert(error.message)
+      }
     } finally {
       setLoading(false)
     }
@@ -69,12 +79,17 @@ export default function Account({ session }) {
         size={150}
         onUpload={(url) => {
           setAvatarUrl(url)
-          updateProfile({ username, website, avatar_url: url })
+          updateProfile({ username, avatar_url: url, year, field_of_study, user_email })
         }}
       />
       <div>
         <label htmlFor="email">Email</label>
-        <input id="email" type="text" value={session.user.email} disabled />
+        <input
+          id="email"
+          type="text"
+          value={user_email || ''}
+          onChange={(e) => setEmail(e.target.value)}
+        />
       </div>
       <div>
         <label htmlFor="username">Name</label>
@@ -86,19 +101,28 @@ export default function Account({ session }) {
         />
       </div>
       <div>
-        <label htmlFor="website">Website</label>
+        <label htmlFor="year">Year</label>
         <input
-          id="website"
-          type="website"
-          value={website || ''}
-          onChange={(e) => setWebsite(e.target.value)}
+          id="year"
+          type="year"
+          value={year || ''}
+          onChange={(e) => setYear(e.target.value)}
+        />
+      </div>
+      <div>
+        <label htmlFor="field_of_study">Field of Study</label>
+        <input
+          id="field_of_study"
+          type="field_of_study"
+          value={field_of_study || ''}
+          onChange={(e) => setFieldOfStudy(e.target.value)}
         />
       </div>
 
       <div>
         <button
           className="button block primary"
-          onClick={() => updateProfile({ username, website, avatar_url })}
+          onClick={() => updateProfile({ username, avatar_url, year, field_of_study, user_email})}
           disabled={loading}
         >
           {loading ? 'Loading ...' : 'Update'}
