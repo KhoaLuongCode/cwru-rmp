@@ -1,5 +1,5 @@
 // Home.js
-import './index.css'
+import './App.css'
 import { useState, useEffect } from 'react'
 import { supabase } from './supabaseClient'
 import Auth from './Auth'
@@ -36,12 +36,17 @@ export default function Home() {
 
   return (
     <div>
-      <div className="container" style={{ padding: '50px 0 100px 0' }}>
+      <div className="container">
       <BrowserRouter>
         <header className="App-header">
           <nav>
             <ul>
-              <li><Link to="/search">About</Link></li>
+              <li>Home</li>
+              <li><Link to="/search">Search</Link></li>
+              {session && session.user.email_confirmed_at && (
+                <li><Link to="/submit">Submit Feedback</Link></li>
+              )}
+              <li><Link to="/auth">Login</Link></li>
             </ul>
           </nav>
         </header>
