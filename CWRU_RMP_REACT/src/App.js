@@ -5,7 +5,8 @@ import { supabase } from './supabaseClient'
 import Auth from './Auth'
 import Account from './Account'
 import Search from './Search'
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import Submit from './Submit'
+import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
 
 export default function Home() {
   const [session, setSession] = useState(null)
@@ -47,25 +48,41 @@ export default function Home() {
 
         <Routes>
           <Route path="/search" element={<Search />} />
+
+          <Route 
+            path="/submit" 
+            element={
+              session && session.user.email_confirmed_at ? 
+                <Submit session={session} /> : 
+                <Navigate to="/auth" />
+            } 
+          />
+
+          {!session ? (
+            <Route path="/auth" element={<Auth />} />
+          ) : session.user.email_confirmed_at ? (
+            <Route path="/auth" element={<Account key={session.user.id} session={session} />} />
+          ) : (
+            <Route 
+              path="/auth" 
+              element={
+                <div>
+                  <p>Please verify your email to access your account.</p>
+                  <button
+                    className="button block"
+                    onClick={() => supabase.auth.signOut()}
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              }
+            />
+          )}
         </Routes>
-        {!session ? (
-          <Auth />
-        ) : session.user.email_confirmed_at ? (
-          <Account key={session.user.id} session={session} />
-        ) : (
-          <div>
-            <p>Please verify your email to access your account.</p>
-            <button
-              className="button block"
-              onClick={() => supabase.auth.signOut()}
-            >
-              Sign Out
-            </button>
-          </div>
-        )}
+
+
             </BrowserRouter>
       </div>
     </div>
-
   )
 }
