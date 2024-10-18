@@ -109,8 +109,8 @@ export default function Account({ session }) {
         <input
           id="email"
           type="text"
-          value={user_email || ''}
-          onChange={(e) => setEmail(e.target.value)}
+          value={session.user.email}
+          disabled="disabled"
         />
       </div>
       <div>
