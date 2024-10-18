@@ -65,7 +65,7 @@ export default function Auth() {
   return (
     <div className="row flex flex-center">
       <div className="col-6 form-widget">
-        <h1 className="header">Supabase + React</h1>
+        <h1 className="header">CWRU Rate My Professor</h1>
         <p className="description">
           {isSignUp
             ? 'Create an account with your email and password'
