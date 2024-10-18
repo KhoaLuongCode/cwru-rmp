@@ -46,7 +46,9 @@ export default function Home() {
               {session && session.user.email_confirmed_at && (
                 <li><Link to="/submit">Submit Feedback</Link></li>
               )}
-              <li><Link to="/auth">Login</Link></li>
+              <li><Link to="/auth">
+              {session && session.user.email_confirmed_at ? 'Profile' : 'Login'}
+              </Link></li>
             </ul>
           </nav>
         </header>
