@@ -1,51 +1,65 @@
+//search for courses 
 import React, { useState } from "react";
 import { supabase } from './supabaseClient'
 import './Search.css'
+import { useNavigate } from 'react-router-dom';
 
 
 const Search = () => {
-    const [searchTerm, setSearchTerm] = useState("");
-    const [results, setResults] = useState(Array(5).fill(''));
+  const [searchTerm, setSearchTerm] = useState("");
+  const [results, setResults] = useState([]);
 
 
-    const handleSearch = async () => {
-        // For now, we'll just leave the results as empty placeholders
-        const { data, error } = await supabase
-        .from('courses')
-        .select('course_id')
-        .ilike('course_id', `%${searchTerm}%`); 
+  const handleSearch = async () => {
+    // For now, we'll just leave the results as empty placeholders
+    const { data, error } = await supabase
+      .from('courses')
+      .select('course_id')
+      .ilike('course_id', `%${searchTerm.replace(/\s+/g, '')}%`);
+
+    if (error) {
+      console.error("Error fetching data:", error);
+    } else {
+      setResults(data);
+    }
+  };
+
+  const navigate = useNavigate();
+
+  const handleCardClick = (courseId) => {
+    navigate(`/course/${courseId}`);
+  };
   
-      if (error) {
-        console.error("Error fetching data:", error);
-      } else {
-        setResults(data);
-      }
-      };
 
 
 
-return (
+  return (
     <div className="search-page">
       <h1>CWRU-RMP</h1>
       <div className="search-container">
-        <input 
+        <input
           type="text"
-          placeholder="Search for professor name or course id..." 
-          value={searchTerm} 
+          placeholder="Search for professor name or course id..."
+          value={searchTerm}
           onChange={(e) => {
-            setSearchTerm(e.target.value)}}
+            setSearchTerm(e.target.value)
+          }}
         />
-        <button onClick={handleSearch}>Search</button>
+        <button className="search-button" onClick={handleSearch}>Search</button>
       </div>
       <div className="results-container">
-      {results.length > 0 ? (
+        {results.length > 0 ? (
           results.map((result, index) => (
-            <div key={index} className="result-card">
-              {JSON.stringify(result)} 
-            </div>
+            <button
+              key={index}
+              className="result-card"
+              onClick={() => handleCardClick(result.course_id)} // Call the function with course_id
+            >
+              {result.course_id}
+            </button>
           ))
         ) : (
-          <div>No results</div>
+          <button className="result-card">No results</button>
         )}
       </div>
     </div>

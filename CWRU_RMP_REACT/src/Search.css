@@ -7,7 +7,7 @@
 .search-box {
 display: flex;
 align-items: center;
-gap: 10px; /* Adds space between input and button */
+gap: 10px; 
 }
 
 .search-box input {
@@ -22,21 +22,32 @@ font-size: 16px;
     background-size:cover;
     background-position: center;
     color: white; 
-    background-color: pink;
+    background-color: rgb(0, 48, 113);
     height: auto; 
-    min-height: 400px;
-    filter: brightness(80%);
+    min-height: 100vh;
   }
 
-  button{
-    background-color: darksalmon;
+.search-button{
+    background-color: rgb(0, 122, 184);
     border: none;
     margin: 15px;
     padding: 15px 32px;
     border-radius: 25px;
 }
 
-.result-card{
-    background-color: white;
-    color: black; 
-}
+.result-card {
+    width: 100%;
+    padding: 10px;
+    background-color: rgb(166, 210, 230);
+    border: 1px solid whitesmoke;
+    display: flex;
+    color: black;
+    align-items: center;
+    justify-content: center; /* Centers text horizontally */
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    text-align: center; /* Centers text within the button */
+  }
+  
