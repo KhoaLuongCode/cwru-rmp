@@ -1,0 +1,128 @@
+[
+    {
+      "course_id": "CSDS101",
+      "course_name": "The Digital Revolution: Computer and Data Science For All",
+      "department": "Computer Science",
+      "course_description": "For students who want to explore the history, the current state, and future challenges of computer and data sciences. Topics include how computers work, computational thinking, how software development differs from traditional manufacturing, the Internet and World Wide Web, social networks, data collection, search engines and data mining, machine learning, trends in computer crime, security, and privacy, how technology is changing our laws and culture. The class includes a lab component where students will be introduced to the Python programming language and other technologies and applications in order to further explore these topics. The recommended pre-requisite is comfort with high school algebra. Counts as a Quantitative Reasoning course."
+    },
+    {
+      "course_id": "CSDS132",
+      "course_name": "Programming in Java",
+      "department": "Computer Science",
+      "course_description": "An in-depth survey of modern programming language features, computer programming and algorithmic problem solving with an emphasis on the Java language. Computers and code compilation; conditional statements, subprograms, loops, methods; object-oriented design, inheritance and polymorphism, abstract classes and interfaces; types, type systems, generic types, abstract data types, strings, arrays, linked lists; software development, modular code design, unit testing; strings, text and file I/O; GUI components, GUI event handling; threads; comparison of Java to C, C++, and C#. Offered as CSDS 132 and ECSE 132. Counts as a CAS Quantitative Reasoning course. Counts as a Quantitative Reasoning course."
+    },
+    {
+      "course_id": "CSDS133",
+      "course_name": "Introduction to Data Science and Engineering for Majors",
+      "department": "Computer Science",
+      "course_description": "This course is an introduction to data science and analytics. In the first half of the course, students will develop a basic understanding of how to manipulate, analyze and visualize large data in a distributed computing environment, with an appreciation of open source development, security and privacy issues. Case studies and team project assignments in the second half of the course will be used to implement the ideas. Topics covered will include: Overview of large scale parallel and distributed (cloud) computing; file systems and file i/o; open source coding and distributed versioning, data query and retrieval; basic data analysis; visualization; data security, privacy and provenance."
+    },
+    {
+      "course_id": "CSDS221",
+      "course_name": "Full Stack Web Development",
+      "department": "Computer Science",
+      "course_description": "An introduction to full stack web development, the course provides foundations in HTML, CSS, and programming in JavaScript. The course introduces front-end technologies and APIs for creating interactive web applications such as Bootstrap, React.js, and Progressive Web Apps, back-end technologies and APIs for creating a web server such as Node.js and Express.js, and database integration technologies such as MySQL and MongoDB. Some background in algorithms, data structures, and databases is helpful but not required."
+    },
+    {
+      "course_id": "CSDS225",
+      "course_name": "Current Issues in Artificial Intelligence, For Better or Worse",
+      "department": "Computer Science",
+      "course_description": "An exploratory seminar for technical and non-technical students on autonomous systems and automatic decision-making software. Prompt engineering will be examined, as well as systems and policies that detect, mitigate or combat AI. This course emphasizes technology and policy. Within assistive, generative, and proxy decision deployments, we consider recurring technical problems such as non-determinism, robustness, risk, bias, stale and erroneous data, small worlds and insufficiently expressive features, overfitting, polysemy, explanation, and verification. Perspectives include engineering problem-solving, law, policy, and management. National concerns of labor, defense technology, and education also kept in focus. The class is open to all majors, but students should have a strong background in engineering, science, or computer technology."
+    },
+    {
+      "course_id": "CSDS233",
+      "course_name": "Introduction to Data Structures",
+      "department": "Computer Science",
+      "course_description": "Different representations of data: lists, stacks and queues, trees, graphs, and files. Manipulation of data: searching and sorting, hashing, recursion and higher order functions. Abstract data types, templating, and the separation of interface and implementation. Introduction to asymptotic analysis. The Java language is used to illustrate the concepts and as an implementation vehicle throughout the course. Offered as CSDS 233 and ECSE 233."
+    },
+    {
+      "course_id": "CSDS234",
+      "course_name": "Structured and Unstructured Data",
+      "department": "Computer Science",
+      "course_description": "This course is an introduction to types of data and their representation, storage, processing and analysis. The course has three parts. In the first part of the course, students will develop a basic understanding and the ability to represent, store, process and analyze structured data. Structured data include catalogs, records, tables, logs, etc., with a fixed dimension and well-defined meaning for each data point. Suitable representation and storage mechanisms include lists and arrays. Relevant techniques include keys, hashes, stacks, queues and trees. In the second part of the course, students will develop a basic understanding and the ability to represent, store, process and analyze semi-structured data. Semi-structured data include texts, web pages and networks, without a dimension and structure, but with well-defined meaning for each data point. Suitable representation and storage mechanisms include trees, graphs and RDF triples. Relevant techniques include XML, YAML, JSON, parsing, annotation, language processing. In the third part of the course, students will develop a basic understanding and the ability to represent, store, process and analyze unstructured data. Unstructured data include images, video, and time series data, without neither a fixed dimension and structure, nor well-defined meaning for individual data points. Suitable representation and storage mechanisms include large matrices, EDF, DICOM. Relevant techniques include feature extraction, segmentation, clustering, rendering, indexing, and visualization."
+    },
+    {
+      "course_id": "CSDS275",
+      "course_name": "Fundamentals of Robotics",
+      "department": "Computer Science",
+      "course_description": "The Fundamentals of Robotics course will expose students to fundamental principles of robotics. Students will explore high level conceptual foundations of robotics beginning with Braitenberg vehicles and apply this knowledge to simulated and physical robot hardware in laboratory experiences and in a final project. Laboratory experiences will guide students through applying theory to practice increasingly complex tasks in a project oriented, group work environment. The course culminates in a robotics challenge project at the end of the semester. Topics covered are: sensors, actuators, kinematics, control, planning and programming. Programming languages and concepts (e.g., C++, object oriented programming) used in robotics will be introduced and used with modern robotics programming toolboxes and frameworks. Prior experience with these languages will not be necessary. Previous experience with robotics is not required for this course. Offered as CSDS 275 and ECSE 275."
+    },
+    {
+      "course_id": "CSDS281",
+      "course_name": "Logic Design and Computer Organization",
+      "department": "Computer Science",
+      "course_description": "Fundamentals of digital systems in terms of both computer organization and logic level design. Organization of digital computers; information representation; boolean algebra; analysis and synthesis of combinational and sequential circuits; datapaths and register transfers; instruction sets and assembly language; input/output and communication; memory. Offered as CSDS 281 and ECSE 281."
+    },
+    {
+      "course_id": "CSDS285",
+      "course_name": "Linux Tools and Scripting",
+      "department": "Computer Science",
+      "course_description": "A fast paced introduction to linux that brings the project-oriented student from little or no linux experience to be fully capable of using scripting languages as tools in a linux command-line environment. This includes systems administration and agile web services with server-side scripting and server-side management. This also involves data cleaning, scraping, wrangling, and processing user data with regular expressions. Current main languages include php, bash, awk, with some client-side javascript, and very brief looks at tcl/lua, powershell, and python. Tools include vim, make, grep/sed, and curl/wget. Recommended preparation: one year of computer programming and familiarity with raw HTML/CSS."
+    },
+    {
+      "course_id": "CSDS290",
+      "course_name": "Introduction to Computer Game Design and Implementation",
+      "department": "Computer Science",
+      "course_description": "This class begins with an examination of the history of video games and of game design. Games will be examined in a systems context to understand gaming and game design fundamentals. Various topics relating directly to the implementation of computer games will be introduced including graphics, animation, artificial intelligence, user interfaces, the simulation of motion, sound generation, and networking. Extensive study of past and current computer games will be used to illustrate course concepts. Individual and group projects will be used throughout the semester to motivate, illustrate and demonstrate the course concepts and ideas. Group game development and implementation projects will culminate in classroom presentation and evaluation. Offered as CSDS 290 and ECSE 290."
+    },
+    {
+      "course_id": "CSDS293",
+      "course_name": "Software Craftsmanship",
+      "department": "Computer Science",
+      "course_description": "A course to improve programming skills, software quality, and the software development process. Software design; Version control; Control issues and routines; Pseudo-code programming process and developer testing; Defensive programming; Classes; Debugging; Self-documenting code; Refactoring. Offered as CSDS 293 and CSDS 293N."
+    },
+    {
+      "course_id": "EBME105",
+      "course_name": "Introduction to Biomedical Engineering",
+      "department": "Biomedical Engineering",
+      "course_description": "This course introduces students to a wide variety of biomedical engineering fields including: biomaterials, biomechanics, biomedical devices & instrumentation, and biomedical computing & analysis. Emphasis is given to recognizing the difference between medical technology as a subject area vs. career tracks within which this subject area is: imagined, designed, fabricated and used. Students learn to distinguish the difference between how a scientist, an engineer, and a clinician are trained and interact with medical technology. Foundational topics like: engineering design, structure-function relationship, biomimicry, and biocompatibility are presented at an introductory level. Students well served by this course include: first year students trying to decide if they want to major in biomedical engineering, first year students who know they want to major in biomedical engineering but are not certain which track they wish to pursue, and upper class students in non-biomedical engineering majors who are looking for deeper insight into what this fast growing field is about."
+    },
+    {
+      "course_id": "EBME201",
+      "course_name": "Physiology-Biophysics I",
+      "department": "Biomedical Engineering",
+      "course_description": "Fundamental concepts of physiology from the cells to organ systems. Cell structure and function: DNA-RNA related enzyme/protein synthesis, membrane permeation (receptors/channels/gates), cellular biochemistry and energetic metabolic functions. Essential systems-level concepts include endocrinology, immunology, cellular/capillary/interphase transport, regulation of fluid volume, solutes, and pH. Liver, renal and respiratory physiology. Basic concepts in thermodynamics, transport and kinetics provide a framework for quantitative analysis and modeling of systems physiology."
+    },
+    {
+      "course_id": "EBME202",
+      "course_name": "Physiology-Biophysics II",
+      "department": "Biomedical Engineering",
+      "course_description": "This course is an extension of EBME201 that will include structure and function of (1) the nervous system, including vision, somatic and proprioceptive sensation, and control of movement, (2) skeletal and smooth muscle, (3) cardiac muscle and the cardiovascular system, and (4) the metabolic system. The material will be taught from a quantitative and functional perspective, with some examples of human pathophysiology."
+    },
+    {
+      "course_id": "EBME300",
+      "course_name": "Dynamics of Biological Systems: A Quantitative Introduction to Biology",
+      "department": "Biomedical Engineering",
+      "course_description": "This course will introduce students to dynamic biological phenomena, from the molecular to the population level, and models of these dynamical phenomena. It will describe a biological system, discuss how to model its dynamics, and experimentally evaluate the resulting models. Topics will include molecular dynamics of biological molecules, kinetics of cell metabolism and the cell cycle, biophysics of excitability, scaling laws for biological systems, biomechanics, and population dynamics. Mathematical tools for the analysis of dynamic biological processes will also be presented. Students will manipulate and analyze simulations of biological processes, and learn to formulate and analyze their own models. This course satisfies a laboratory requirement for the biology major. Offered as BIOL300 and EBME300."
+    },
+    {
+      "course_id": "EBME303",
+      "course_name": "Structure of Biological Materials",
+      "department": "Biomedical Engineering",
+      "course_description": "Structure of proteins, nucleic acids, connective tissue and bone, from molecular to microscopic levels. An introduction to bioengineering biological materials and biomimetic materials, and an understanding of how different instruments may be used for imaging, identification and characterization of biological materials. Recommended preparation: EMAC270. Offered as: EBME303 and EMAC303."
+    },
+    {
+      "course_id": "EBME305",
+      "course_name": "Materials for Prosthetics and Orthotics",
+      "department": "Biomedical Engineering",
+      "course_description": "A synthesis of skeletal tissue structure and biology, materials engineering, and strength of materials concepts. This course is centered on deepening the concept of biocompatibility and using it to pose and solve biomaterials problems. We cover: fundamental concepts of materials used for load bearing medical applications, wear, corrosion, and failure of implants. Structure and properties of hard tissues and joints are presented using a size hierarchy motif. Tools and analysis paradigms useful in the characterization of biomaterials are covered in the context of orthopedic and dental applications."
+    },
+    {
+      "course_id": "EBME306",
+      "course_name": "Introduction to Biomedical Materials",
+      "department": "Biomedical Engineering",
+      "course_description": "Biomaterials design and application in different tissue and organ systems. The relationship between the physical and chemical structure of biomaterials, functional properties, and biological response."
+    },
+    {
+      "course_id": "EBME307",
+      "course_name": "Biomechanical Prosthetic Systems",
+      "department": "Biomedical Engineering",
+      "course_description": "Introduction to the basic biomechanics of human movement and applications to the design and evaluation of artificial devices intended to restore or improve movement lost due to injury or disease. Measurement techniques in movement biomechanics, including motion analysis, electromyography, and gait analysis. Design and use of upper and lower limb prostheses. Principles of neuroprostheses with applications to paralyzed upper and lower extremities. Recommended preparation: Consent of instructor and senior standing."
+    },
+    {
+      "course_id": "EBME308",
+      "course_name": "Biomedical Signals and Systems",
+      "department": "Biomedical Engineering",
+      "course_description": "Quantitative analysis of biomedical signals and physiological systems. Time domain and frequency domain analysis of linear systems. Fourier and Laplace transforms. A/D conversion and sampling. Filter design. Computational laboratory experiences with biomedical applications."
+    }
+  ]
