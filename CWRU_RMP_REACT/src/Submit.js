@@ -43,6 +43,7 @@ export default function Submit({ session }) {
     }));
   };
 
+  // Submit.js
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -53,10 +54,22 @@ export default function Submit({ session }) {
       return;
     }
 
+    // Convert numeric string values to numbers
+    const dataToInsert = {
+      ...formData,
+      quality: Number(formData.quality),
+      difficulty: Number(formData.difficulty),
+      workload: Number(formData.workload),
+      upvote: Number(formData.upvote),
+      downvote: Number(formData.downvote),
+      extra_credit: Boolean(formData.extra_credit),
+      user_id: session.user.id,
+    };
+
     // Save feedback to Supabase
     const { error } = await supabase
       .from('entry') // Make sure to use the correct table name
-      .insert([{ ...formData, user_id: session.user.id }]); // Assuming you want to link to the user's ID
+      .insert([dataToInsert]); // Assuming you want to link to the user's ID
 
     if (error) {
       console.error('Error inserting data:', error);
@@ -104,7 +117,7 @@ export default function Submit({ session }) {
                 required
               />
             </div>
-            
+
             <div className="form-group course">
               <label htmlFor="course_id">Course:</label>
               <select
