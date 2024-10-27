@@ -1,0 +1,42 @@
+.search-container {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+  }
+
+.search-box {
+display: flex;
+align-items: center;
+gap: 10px; /* Adds space between input and button */
+}
+
+.search-box input {
+padding: 8px;
+font-size: 16px;
+}
+
+.search-page {
+    text-align: left;
+    padding: 100px;
+    /* TODO: Add background image styles here */
+    background-size:cover;
+    background-position: center;
+    color: white; 
+    background-color: pink;
+    height: auto; 
+    min-height: 400px;
+    filter: brightness(80%);
+  }
+
+  button{
+    background-color: darksalmon;
+    border: none;
+    margin: 15px;
+    padding: 15px 32px;
+    border-radius: 25px;
+}
+
+.result-card{
+    background-color: white;
+    color: black; 
+}
