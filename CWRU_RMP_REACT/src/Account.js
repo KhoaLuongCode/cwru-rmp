@@ -1,4 +1,5 @@
-// Account.js
+// Account.js 
+//used for managing the profiles page 
 import { useState, useEffect } from 'react'
 import { supabase } from './supabaseClient'
 import Avatar from './Avatar'

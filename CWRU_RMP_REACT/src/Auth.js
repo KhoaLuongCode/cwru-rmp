@@ -1,4 +1,5 @@
 // Auth.js
+//handles user authorization 
 import { useState } from 'react'
 import { supabase } from './supabaseClient'
 

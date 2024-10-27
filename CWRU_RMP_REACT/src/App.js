@@ -6,6 +6,7 @@ import Auth from './Auth'
 import Account from './Account'
 import Search from './Search'
 import Submit from './Submit'
+import CoursePage from './CoursePage';
 import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
 
 export default function Home() {
@@ -55,6 +56,7 @@ export default function Home() {
 
         <Routes>
           <Route path="/search" element={<Search />} />
+          <Route path="/course/:courseId" element={<CoursePage />} />
 
           <Route 
             path="/submit" 
