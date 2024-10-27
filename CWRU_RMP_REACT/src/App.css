@@ -25,16 +25,18 @@ nav{
   list-style-type: none;
   padding: 0;
   display: flex;
+  color:white;
   justify-content: flex-end;
 }
 
 nav ul li {
   display: inline;
   margin-left: 10px;
+  color:#fff;
 }
 
 .App-link {
-  color: #61dafb;
+  color:#fff;
 }
 
 @keyframes App-logo-spin {
