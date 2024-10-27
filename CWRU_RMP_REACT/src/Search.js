@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { supabase } from './supabaseClient'
+import './Search.css'
+
 
 const Search = () => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -20,12 +22,15 @@ const Search = () => {
       }
       };
 
+
+
 return (
     <div className="search-page">
+      <h1>CWRU-RMP</h1>
       <div className="search-container">
         <input 
           type="text"
-          placeholder="Search..." 
+          placeholder="Search for professor name or course id..." 
           value={searchTerm} 
           onChange={(e) => {
             setSearchTerm(e.target.value)}}
