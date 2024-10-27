@@ -1,6 +1,8 @@
-//submit new feedback
+// Submit.js
 import React, { useEffect, useState } from 'react';
 import { supabase } from './supabaseClient';
+import coursesData from './courses.json'; // Import the courses JSON
+import './css/Submit.css'
 
 export default function Submit({ session }) {
   const [formData, setFormData] = useState({
@@ -19,12 +21,17 @@ export default function Submit({ session }) {
     office_hours: ''
   });
 
+  const [courses, setCourses] = useState([]);
+
   const handleLogout = async () => {
     await supabase.auth.signOut();
   };
 
   useEffect(() => {
-    // Optional: You can add any additional logic here
+    // Load courses from the imported JSON
+    setCourses(coursesData);
+    
+    // Optional: Add any additional logic here
     console.log('User is logged in:', session.user);
   }, [session]);
 
@@ -38,6 +45,13 @@ export default function Submit({ session }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate that the selected course_id exists in the courses array
+    const selectedCourse = courses.find(course => course.course_id === formData.course_id);
+    if (!selectedCourse) {
+      alert('Please select a valid course.');
+      return;
+    }
 
     // Save feedback to Supabase
     const { error } = await supabase
@@ -69,135 +83,167 @@ export default function Submit({ session }) {
   };
 
   return (
-    <div className="landing-container" style={{ padding: '20px', color: 'white' }}>
-      <h1>Welcome to CWRU RMP!</h1>
-      <p>Hi, {session.user.email}. Thank you for joining us!</p>
+    <div className="wrapper">
+      <div className="landing-container">
+        <h1>Welcome to CWRU RMP!</h1>
+        <p>Hi, {session.user.email}. Thank you for joining us!</p>
 
-      <div>
-        <h2>Feedback about Professors</h2>
-        <p>Submit your feedback about professors and help others make informed decisions.</p>
-        
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>Professor Name:</label>
-            <input
-              type="text"
-              name="professor_name"
-              value={formData.professor_name}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div>
-            <label>Course ID:</label>
-            <input
-              type="text"
-              name="course_id"
-              value={formData.course_id}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div>
-            <label>Quality (1-5):</label>
-            <input
-              type="number"
-              name="quality"
-              value={formData.quality}
-              onChange={handleChange}
-              min="1"
-              max="5"
-              required
-            />
-          </div>
-          <div>
-            <label>Difficulty (1-5):</label>
-            <input
-              type="number"
-              name="difficulty"
-              value={formData.difficulty}
-              onChange={handleChange}
-              min="1"
-              max="5"
-              required
-            />
-          </div>
-          <div>
-            <label>Comment:</label>
-            <textarea
-              name="comment"
-              value={formData.comment}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div>
-            <label>Workload (hours/week):</label>
-            <input
-              type="number"
-              name="workload"
-              value={formData.workload}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div>
-            <label>Semester:</label>
-            <input
-              type="text"
-              name="semester"
-              value={formData.semester}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div>
-            <label>Textbook:</label>
-            <input
-              type="text"
-              name="textbook"
-              value={formData.textbook}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label>Extra Credit:</label>
-            <input
-              type="checkbox"
-              name="extra_credit"
-              checked={formData.extra_credit}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label>Study Tips:</label>
-            <textarea
-              name="study_tips"
-              value={formData.study_tips}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label>Office Hours:</label>
-            <input
-              type="text"
-              name="office_hours"
-              value={formData.office_hours}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <button className="button block" type="submit">
-              Submit Feedback
-            </button>
-          </div>
-        </form>
-      </div>
+        <div className="form-section">
+          <h2>Feedback about Professors</h2>
+          <p>Submit your feedback about professors and help others make informed decisions.</p>
+          
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="professor_name">Professor Name:</label>
+              <input
+                type="text"
+                id="professor_name"
+                name="professor_name"
+                value={formData.professor_name}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            
+            <div className="form-group course">
+              <label htmlFor="course_id">Course:</label>
+              <select
+                id="course_id"
+                name="course_id"
+                value={formData.course_id}
+                onChange={handleChange}
+                required
+              >
+                <option value="" disabled>Select a course</option>
+                {courses.map((course) => (
+                  <option key={course.course_id} value={course.course_id}>
+                    {course.course_id} 
+                  </option>
+                ))}
+              </select>
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="quality">Quality (1-5):</label>
+              <input
+                type="number"
+                id="quality"
+                name="quality"
+                value={formData.quality}
+                onChange={handleChange}
+                min="1"
+                max="5"
+                required
+              />
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="difficulty">Difficulty (1-5):</label>
+              <input
+                type="number"
+                id="difficulty"
+                name="difficulty"
+                value={formData.difficulty}
+                onChange={handleChange}
+                min="1"
+                max="5"
+                required
+              />
+            </div>
+            
+            <div className="form-group comment">
+              <label htmlFor="comment">Comment:</label>
+              <textarea
+                id="comment"
+                name="comment"
+                value={formData.comment}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="workload">Workload (hours/week):</label>
+              <input
+                type="number"
+                id="workload"
+                name="workload"
+                value={formData.workload}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="semester">Semester:</label>
+              <input
+                type="text"
+                id="semester"
+                name="semester"
+                value={formData.semester}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="textbook">Textbook:</label>
+              <input
+                type="text"
+                id="textbook"
+                name="textbook"
+                value={formData.textbook}
+                onChange={handleChange}
+              />
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="extra_credit">
+                <input
+                  type="checkbox"
+                  id="extra_credit"
+                  name="extra_credit"
+                  checked={formData.extra_credit}
+                  onChange={handleChange}
+                />
+                Extra Credit
+              </label>
+            </div>
+            
+            <div className="form-group study-tips">
+              <label htmlFor="study_tips">Study Tips:</label>
+              <textarea
+                id="study_tips"
+                name="study_tips"
+                value={formData.study_tips}
+                onChange={handleChange}
+              />
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="office_hours">Office Hours:</label>
+              <input
+                type="text"
+                id="office_hours"
+                name="office_hours"
+                value={formData.office_hours}
+                onChange={handleChange}
+              />
+            </div>
+            
+            <div className="form-group">
+              <button className="button block" type="submit">
+                Submit Feedback
+              </button>
+            </div>
+          </form>
+        </div>
 
-      <div>
-        <button className="button block" onClick={handleLogout}>
-          Sign Out
-        </button>
+        <div>
+          <button className="button block signout-button" onClick={handleLogout}>
+            Sign Out
+          </button>
+        </div>
       </div>
     </div>
   );

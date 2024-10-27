@@ -1,0 +1,102 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff; /* Set background color to white */
+    color: #000000; /* Set text color to black */
+    margin: 0;
+    min-height: 100vh;
+}
+
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Centers content within the visible area */
+}
+
+.landing-container {
+    width: 100%;
+    max-width: 600px;
+    background: #ffffff; /* Set container background to white */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Ensure all text inside the .landing-container is black */
+.landing-container, 
+.landing-container p, 
+.landing-container h1, 
+.landing-container h2 {
+    color: #000000; /* Set text color to black */
+}
+
+
+h1, h2 {
+    color: #000000; /* Set headers to black */
+}
+
+.form-section {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #000000; /* Set label text color to black */
+}
+
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    outline: none;
+    background-color: #ffffff; /* Set input background to white */
+    color: #000000; /* Set input text color to black */
+}
+
+textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+.button {
+    background-color: #0073e6;
+    color: #ffffff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #005bb5;
+}
+
+.signout-button {
+    margin-top: 20px;
+    background-color: #e63946;
+}
+
+.signout-button:hover {
+    background-color: #c22d36;
+}
