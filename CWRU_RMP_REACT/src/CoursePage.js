@@ -14,7 +14,8 @@ const CoursePage = () => {
             // Fetch data from Supabase
             const { data, error } = await supabase
                 .from('entry')
-                .select('*');
+                .select('*')
+                .eq('course_id', courseId);
 
             if (error) {
                 console.error('Error fetching feedback:', error);
