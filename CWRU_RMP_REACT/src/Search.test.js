@@ -1,6 +1,6 @@
 // Search.test.js
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import Search from './Search';
 import { supabase } from './supabaseClient';
 import { useNavigate } from 'react-router-dom';
@@ -39,21 +39,27 @@ describe('Search Component', () => {
     expect(inputElement.value).toBe('CSDS101');
   });
 
-//   test('displays search results when search button is clicked', async () => {
-//     const buttonElement = screen.getByText(/Search/i);
-//     fireEvent.click(buttonElement);
+  test('displays search results when search button is clicked', async () => {
+    const buttonElement = screen.getByText(/Search/i);
+    await act(async () => {
+      fireEvent.click(buttonElement); // Simulate button click
+    });
 
-//     const resultCard = await screen.findByText('CSDS101');
-//     expect(resultCard).toBeInTheDocument();
-//   });
+    const resultCard = await screen.findByText('CSDS101');
+    expect(resultCard).toBeInTheDocument();
+  });
 
-//   test('navigates to course page on card click', async () => {
-//     const buttonElement = screen.getByText(/Search/i);
-//     fireEvent.click(buttonElement);
+  // test('navigates to course page on card click', async () => {
+  //   const buttonElement = screen.getByText(/Search/i);
+  //   await act(async () => {
+  //     fireEvent.click(buttonElement); // Simulate button click
+  //   });
 
-//     const resultCard = await screen.findByText('CSDS101');
-//     fireEvent.click(resultCard);
+  //   const resultCard = await screen.findByText('CSDS101');
+  //   await act(async () => {
+  //     fireEvent.click(resultCard); // Simulate button click
+  //   });
 
-//     expect(useNavigate()).toHaveBeenCalledWith('/course/CSDS101');
-//   });
+  //   expect(useNavigate()).toHaveBeenCalledWith('/course/CSDS101');
+  // });
 });

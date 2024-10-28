@@ -43,11 +43,11 @@ export default function Home() {
           <nav>
             <ul>
               <li>Home</li>
-              <li><Link to="/search">Search</Link></li>
+              <li ><Link to="/search" style={{ color: 'white' }}>Search</Link></li>
               {session && session.user.email_confirmed_at && (
-                <li><Link to="/submit">Submit Feedback</Link></li>
+                <li><Link to="/submit" style={{ color: 'white' }}>Submit Feedback</Link></li>
               )}
-              <li><Link to="/auth">
+              <li><Link to="/auth" style={{ color: 'white' }}>
               {session && session.user.email_confirmed_at ? 'Profile' : 'Login'}
               </Link></li>
             </ul>
