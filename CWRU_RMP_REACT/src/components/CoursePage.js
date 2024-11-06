@@ -1,8 +1,8 @@
 //displays search result for each course
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { supabase } from './supabaseClient';
-import "./Search.css"
+import { supabase } from '../supabaseClient';
+import "../css/Search.css";
 
 const CoursePage = () => {
     const { courseId } = useParams();

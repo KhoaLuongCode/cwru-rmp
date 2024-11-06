@@ -1,7 +1,7 @@
 //search for courses 
 import React, { useState } from "react";
-import { supabase } from './supabaseClient'
-import './Search.css'
+import { supabase } from '../supabaseClient'
+import '../css/Search.css';
 import { useNavigate } from 'react-router-dom';
 
 
