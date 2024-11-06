@@ -1,8 +1,8 @@
 // Submit.js
 import React, { useEffect, useState } from 'react';
-import { supabase } from './supabaseClient';
-import coursesData from './courses.json'; // Import the courses JSON
-import './css/Submit.css'
+import { supabase } from '../supabaseClient';
+import coursesData from '../data/courses.json'; // Import the courses JSON
+import '../css/Submit.css'
 
 export default function Submit({ session }) {
   const [formData, setFormData] = useState({
