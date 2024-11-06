@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
 import coursesData from '../data/courses.json'; // Import the courses JSON
 import '../css/Submit.css'
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function Submit({ session }) {
   const [formData, setFormData] = useState({
@@ -21,10 +22,16 @@ export default function Submit({ session }) {
     office_hours: ''
   });
 
+  const notify = () => toast("Wow so easy!");
+
   const [courses, setCourses] = useState([]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
+    toast.success('Successfully logged out!', {
+      position: "top-right",
+      autoClose: 3000, // Toast disappears after 3 seconds
+    });
   };
 
   useEffect(() => {
