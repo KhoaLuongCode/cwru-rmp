@@ -1,5 +1,6 @@
 // Home.js
 import '../css/App.css'
+import 'react-toastify/dist/ReactToastify.css'
 import { useState, useEffect } from 'react'
 import { supabase } from '../supabaseClient'
 import Auth from '../auth/Auth'
