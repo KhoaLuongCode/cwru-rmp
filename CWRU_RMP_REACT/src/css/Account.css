@@ -1,0 +1,112 @@
+/* Account.css */
+
+.account-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  .form-widget {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+  }
+  
+  .input-field {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .input-field:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  .update-button {
+    margin-top: 20px;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .update-button:disabled {
+    background-color: #a0cfff;
+    cursor: not-allowed;
+  }
+  
+  .entries {
+    margin-top: 20px;
+  }
+  
+  .entries h3 {
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  .entry-card {
+    background-color: #fff;
+    border: 1px solid #e1e1e1;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 15px;
+    transition: box-shadow 0.2s;
+  }
+  
+  .entry-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .entry-header h4 {
+    margin: 0;
+    font-size: 1.1em;
+    color: #555;
+  }
+  
+  .course-id {
+    background-color: #f0f0f0;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    color: #777;
+  }
+  
+  .entry-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .ratings {
+    display: flex;
+    gap: 20px;
+    font-size: 0.95em;
+    color: #555;
+  }
+  
+  .comment {
+    font-size: 0.95em;
+    color: #666;
+    margin: 0;
+  }
+  
