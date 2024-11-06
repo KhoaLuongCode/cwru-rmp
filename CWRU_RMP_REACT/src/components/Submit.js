@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
 import coursesData from '../data/courses.json'; // Import the courses JSON
 import '../css/Submit.css'
+import { showSuccessToast, showErrorToast } from '../utils/Toastr'; // Import toast functions
 
 export default function Submit({ session }) {
   const [formData, setFormData] = useState({
@@ -50,7 +51,7 @@ export default function Submit({ session }) {
     // Validate that the selected course_id exists in the courses array
     const selectedCourse = courses.find(course => course.course_id === formData.course_id);
     if (!selectedCourse) {
-      alert('Please select a valid course.');
+      showErrorToast('Please select a valid course.');
       return;
     }
 
@@ -73,9 +74,9 @@ export default function Submit({ session }) {
 
     if (error) {
       console.error('Error inserting data:', error);
-      alert('Error submitting feedback');
+      showErrorToast('Error submitting feedback');
     } else {
-      alert('Feedback submitted successfully!');
+      showSuccessToast('Feedback submitted successfully!');
       // Reset form data after submission
       setFormData({
         professor_name: '',

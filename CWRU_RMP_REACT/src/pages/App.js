@@ -2,12 +2,14 @@
 import '../css/App.css'
 import { useState, useEffect } from 'react'
 import { supabase } from '../supabaseClient'
-import Auth from '../Auth/Auth'
+import Auth from '../auth/Auth'
 import Account from '../components/Account'
 import Search from '../components/Search'
 import Submit from '../components/Submit'
 import CoursePage from '../components/CoursePage';
 import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import { showSuccessToast, showErrorToast } from '../utils/Toastr';
 
 export default function Home() {
   const [session, setSession] = useState(null)
@@ -79,7 +81,16 @@ export default function Home() {
                   <p>Please verify your email to access your account.</p>
                   <button
                     className="button block"
-                    onClick={() => supabase.auth.signOut()}
+                    onClick={async () => {
+                      const { error } = await supabase.auth.signOut();
+                      if (error) {
+                        console.error('Error signing out:', error);
+                        showErrorToast('Failed to sign out');
+                      } else {
+                        showSuccessToast('Signed out successfully');
+                      }
+                    }}
+                
                   >
                     Sign Out
                   </button>
@@ -91,6 +102,7 @@ export default function Home() {
 
 
             </BrowserRouter>
+            <ToastContainer />
       </div>
     </div>
   )
