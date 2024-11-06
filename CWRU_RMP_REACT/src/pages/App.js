@@ -2,7 +2,7 @@
 import '../css/App.css'
 import { useState, useEffect } from 'react'
 import { supabase } from '../supabaseClient'
-import Auth from '../Auth/Auth'
+import Auth from '../auth/Auth'
 import Account from '../components/Account'
 import Search from '../components/Search'
 import Submit from '../components/Submit'
