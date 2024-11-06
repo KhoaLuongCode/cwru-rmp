@@ -2,6 +2,7 @@
 //handles user authorization 
 import { useState } from 'react'
 import { supabase } from '../supabaseClient'
+import { showErrorToast, showSuccessToast } from '../utils/Toastr'
 
 export default function Auth() {
   const [loading, setLoading] = useState(false)
@@ -24,10 +25,10 @@ export default function Auth() {
 
       if (error) throw error
       console.log('Sign up successful:', data)
-      alert('Check your email for the verification link!')
+      showSuccessToast('Check your email for verification')
     } catch (error) {
       console.error('Error during sign up:', error)
-      alert(error.error_description || error.message)
+      showErrorToast(error.error_description || error.message)
     } finally {
       setLoading(false)
     }
@@ -42,12 +43,14 @@ export default function Auth() {
       })
       if (error) throw error
       if (!data.session?.user?.email_confirmed_at) {
-        alert('Please verify your email before logging in.')
+        showErrorToast('Please verify your email before logging in.')
         supabase.auth.signOut()
+      }else {
+        showSuccessToast('Signed in successfully!');
       }
     } catch (error) {
       console.error('Error during sign in:', error)
-      alert(error.error_description || error.message)
+      showErrorToast(error.error_description || error.message)
     } finally {
       setLoading(false)
     }

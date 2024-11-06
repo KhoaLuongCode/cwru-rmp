@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../supabaseClient'
 import Avatar from './Avatar'
+import { showSuccessToast, showErrorToast } from '../utils/Toastr';
 
 export default function Account({ session }) {
   const [loading, setLoading] = useState(true)
@@ -68,7 +69,7 @@ export default function Account({ session }) {
       // Refresh profile data...
     } catch (error) {
       if (error.message.includes("email_check")){
-        alert('Only @case.edu email addresses are allowed. Please enter valid email')
+        showErrorToast('Only @case.edu email addresses are allowed. Please enter valid email');
       }else{
         alert(error.message)
       }
@@ -87,10 +88,10 @@ export default function Account({ session }) {
         email: session.user.email,
       })
       if (error) throw error
-      alert('Verification email has been resent. Please check your inbox.')
+      showSuccessToast('Verification email has been resent. Please check your inbox.')
     } catch (error) {
       console.error('Error resending verification email:', error)
-      alert(error.error_description || error.message)
+      showErrorToast(error.error_description || error.message);
     } finally {
       setLoading(false)
     }
