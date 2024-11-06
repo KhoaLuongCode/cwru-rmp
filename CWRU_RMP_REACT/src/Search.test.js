@@ -16,9 +16,10 @@ jest.mock('./supabaseClient', () => ({
   }
 }));
 
-// Mock useNavigate
+
 jest.mock('react-router-dom', () => ({
-  useNavigate: jest.fn(),
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: jest.fn(), 
 }));
 
 describe('Search Component', () => {
@@ -49,17 +50,20 @@ describe('Search Component', () => {
     expect(resultCard).toBeInTheDocument();
   });
 
-  // test('navigates to course page on card click', async () => {
-  //   const buttonElement = screen.getByText(/Search/i);
-  //   await act(async () => {
-  //     fireEvent.click(buttonElement); // Simulate button click
-  //   });
+  test('navigates to course page on card click', async () => {
+    const mockNavigate = jest.fn();
+    useNavigate.mockReturnValue(mockNavigate);
 
-  //   const resultCard = await screen.findByText('CSDS101');
-  //   await act(async () => {
-  //     fireEvent.click(resultCard); // Simulate button click
-  //   });
+    const buttonElement = screen.getByText(/Search/i);
+    await act(async () => {
+      fireEvent.click(buttonElement); // Simulate button click
+    });
 
-  //   expect(useNavigate()).toHaveBeenCalledWith('/course/CSDS101');
-  // });
+    const resultCard = await screen.findByText('CSDS101');
+    await act(async () => {
+      fireEvent.click(resultCard); // Simulate button click
+    });
+
+    expect(mockNavigate).toHaveBeenCalledWith('/course/CSDS101');
+  });
 });
