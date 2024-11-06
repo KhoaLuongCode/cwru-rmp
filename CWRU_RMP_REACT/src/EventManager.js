@@ -1,6 +1,6 @@
 // Event manager, sends data to db
 import { useState, useEffect } from 'react'
-import { supabase } from './supabaseClient'
+import { supabase } from '../supabaseClient'
 import Avatar from './Avatar'
 
 // Function to submit feedback
