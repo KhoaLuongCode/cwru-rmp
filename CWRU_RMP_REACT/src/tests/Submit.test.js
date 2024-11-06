@@ -1,12 +1,12 @@
 // Submit.test.js
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
-import Submit from './Submit';
-import { supabase } from './supabaseClient';
+import Submit from '../components/Submit';
+import { supabase } from '../supabaseClient';
 import '@testing-library/jest-dom'; // Ensure jest-dom is imported for matchers
 
 // Mock the supabase client
-jest.mock('./supabaseClient', () => ({
+jest.mock('../supabaseClient', () => ({
   supabase: {
     from: jest.fn(),
     auth: {
