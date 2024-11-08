@@ -1,0 +1,16 @@
+[
+{
+    "professor_id": "1",
+    "first_name": "Harold",
+    "last_name": "Connamacher",
+    "department": "Computer Science and Data Science",
+    "email": "hsc21@case.edu"
+  },
+  {
+    "professor_id": "2",
+    "first_name": "Mehmet",
+    "last_name": "Koyturk",
+    "department": "Computer Science and Data Science",
+    "email": "mxk331@case.edu"
+  }
+]

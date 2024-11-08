@@ -5,6 +5,7 @@ import coursesData from '../data/courses.json'; // Import the courses JSON
 import '../css/Submit.css'
 import { showSuccessToast, showErrorToast } from '../utils/Toastr'; // Import toast functions
 import { ToastContainer, toast } from 'react-toastify';
+import professorData from '../data/professors.json';
 
 export default function Submit({ session }) {
   const [formData, setFormData] = useState({
@@ -26,6 +27,7 @@ export default function Submit({ session }) {
   const notify = () => toast("Wow so easy!");
 
   const [courses, setCourses] = useState([]);
+  const [professors, setProfessors] = useState([]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -38,7 +40,7 @@ export default function Submit({ session }) {
   useEffect(() => {
     // Load courses from the imported JSON
     setCourses(coursesData);
-    
+    setProfessors(professorData);
     // Optional: Add any additional logic here
     console.log('User is logged in:', session.user);
   }, [session]);
@@ -116,14 +118,20 @@ export default function Submit({ session }) {
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="professor_name">Professor Name:</label>
-              <input
-                type="text"
+              <select
                 id="professor_name"
                 name="professor_name"
                 value={formData.professor_name}
                 onChange={handleChange}
                 required
-              />
+              >
+                <option value="" disabled>Select a professor</option>
+                {professors.map((professor) => (
+                  <option key={professor.professor_id} value={`${professor.first_name} ${professor.last_name}`}>
+                    {professor.first_name} {professor.last_name} ({professor.department})
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div className="form-group course">
@@ -146,30 +154,34 @@ export default function Submit({ session }) {
             
             <div className="form-group">
               <label htmlFor="quality">Quality (1-5):</label>
-              <input
-                type="number"
+              <select
                 id="quality"
                 name="quality"
                 value={formData.quality}
                 onChange={handleChange}
-                min="1"
-                max="5"
                 required
-              />
+              >
+                <option value="" disabled>Select quality</option>
+                {[1, 2, 3, 4, 5].map((num) => (
+                  <option key={num} value={num}>{num}</option>
+                ))}
+              </select>
             </div>
             
             <div className="form-group">
               <label htmlFor="difficulty">Difficulty (1-5):</label>
-              <input
-                type="number"
+              <select
                 id="difficulty"
                 name="difficulty"
                 value={formData.difficulty}
                 onChange={handleChange}
-                min="1"
-                max="5"
                 required
-              />
+              >
+                <option value="" disabled>Select difficulty</option>
+                {[1, 2, 3, 4, 5].map((num) => (
+                  <option key={num} value={num}>{num}</option>
+                ))}
+              </select>
             </div>
             
             <div className="form-group comment">
@@ -197,14 +209,18 @@ export default function Submit({ session }) {
             
             <div className="form-group">
               <label htmlFor="semester">Semester:</label>
-              <input
-                type="text"
+              <select
                 id="semester"
                 name="semester"
                 value={formData.semester}
                 onChange={handleChange}
                 required
-              />
+              >
+                <option value="" disabled>Select a semester</option>
+                <option value="Fall">Fall</option>
+                <option value="Spring">Spring</option>
+                <option value="Summer">Summer</option>
+              </select>
             </div>
             
             <div className="form-group">
