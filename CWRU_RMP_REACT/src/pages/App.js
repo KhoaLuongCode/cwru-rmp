@@ -91,7 +91,7 @@ export default function Home() {
                         showSuccessToast('Signed out successfully');
                       }
                     }}
-                
+
                   >
                     Sign Out
                   </button>

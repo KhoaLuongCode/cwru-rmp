@@ -1,11 +1,7 @@
 // Submit.test.js
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
-<<<<<<< HEAD
-import Submit from './Submit';
-=======
 import Submit from '../components/Submit';
->>>>>>> b8f1d07250a009ce3c9030ccadf95cfdd1a4e096
 import { supabase } from '../supabaseClient';
 import '@testing-library/jest-dom'; // Ensure jest-dom is imported for matchers
 
