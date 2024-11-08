@@ -48,32 +48,40 @@ export default function Account({ session }) {
     fetchData()
   }, [session])
 
-  async function updateProfile(updates) {
-    try {
-      setLoading(true)
-      const { user } = session
-
-      const profileUpdates = {
-        id: user.id,
-        user_email: user.email,
-        ...updates,
-        updated_at: new Date(),
+    async function updateProfile(updates) {
+      try {
+        setLoading(true)
+        const { user } = session
+    
+        const profileUpdates = {
+          id: user.id,
+          user_email: user.email,
+          ...updates,
+          updated_at: new Date(),
+        }
+    
+        let { data, error } = await supabase.from('profiles').upsert(profileUpdates)
+        if (error) {
+          // Check for the duplicate key error specifically for the username
+          if (error.message.includes("duplicate key value violates unique constraint \"profiles_username_key\"")) {
+            showErrorToast("This username already exists, please try another one.")
+          } else {
+            throw error // rethrow if it's a different error
+          }
+        }
+    
+        // Refresh profile data...
+      } catch (error) {
+        if (error.message.includes("email_check")) {
+          showErrorToast('Only @case.edu email addresses are allowed. Please enter a valid email')
+        } else {
+          alert(error.message)
+        }
+      } finally {
+        setLoading(false)
       }
-
-      let { error } = await supabase.from('profiles').upsert(profileUpdates)
-      if (error) throw error
-
-      // Refresh profile data...
-    } catch (error) {
-      if (error.message.includes("email_check")){
-        showErrorToast('Only @case.edu email addresses are allowed. Please enter valid email');
-      }else{
-        alert(error.message)
-      }
-    } finally {
-      setLoading(false)
     }
-  }
+  
   
 
   const { username, avatar_url, year, field_of_study } = profile
@@ -106,13 +114,17 @@ export default function Account({ session }) {
             placeholder="Username"
             className="input-field"
           />
-          <input
-            type="number"
+          <select
             value={profile.year}
             onChange={(e) => setProfile({ ...profile, year: e.target.value })}
-            placeholder="Year"
             className="input-field"
-          />
+          >
+            <option value="">Select Year</option>
+            <option value="Freshman">Freshman</option>
+            <option value="Sophomore">Sophomore</option>
+            <option value="Junior">Junior</option>
+            <option value="Senior">Senior</option>
+          </select>
           <input
             type="text"
             value={profile.field_of_study}

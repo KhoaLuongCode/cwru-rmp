@@ -235,16 +235,22 @@ export default function Submit({ session }) {
             </div>
             
             <div className="form-group">
-              <label htmlFor="extra_credit">
-                <input
-                  type="checkbox"
-                  id="extra_credit"
-                  name="extra_credit"
-                  checked={formData.extra_credit}
-                  onChange={handleChange}
-                />
-                Extra Credit
-              </label>
+              <label htmlFor="extra_credit">Extra Credit:</label>
+              <select
+                id="extra_credit"
+                name="extra_credit"
+                value={formData.extra_credit ? "Yes" : "No"}
+                onChange={(e) => 
+                  setFormData((prevData) => ({
+                    ...prevData,
+                    extra_credit: e.target.value === "Yes"
+                  }))
+                }
+                required
+              >
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
             </div>
             
             <div className="form-group study-tips">
