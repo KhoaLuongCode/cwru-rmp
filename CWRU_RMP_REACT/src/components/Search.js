@@ -7,10 +7,18 @@ import { useNavigate } from 'react-router-dom';
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchType, setSearchType] = useState('professor'); // "professor" or "course"
   const [results, setResults] = useState([]);
 
-
   const handleSearch = async () => {
+    if (searchType === "course"){
+      handleSearchCourse();
+    }else{
+      handleSearchProf();
+    }
+  }
+
+  const handleSearchCourse = async () => {
     // For now, we'll just leave the results as empty placeholders
     const { data, error } = await supabase
       .from('courses')
@@ -24,26 +32,55 @@ const Search = () => {
     }
   };
 
+
+  const handleSearchProf = async () => {
+    // For now, we'll just leave the results as empty placeholders
+    const { data, error } = await supabase
+      .from('professors')
+      .select('first_name, last_name')
+      .or(`first_name.ilike.%${searchTerm}%,last_name.ilike.%${searchTerm}%`);
+
+    if (error) {
+      console.error("Error fetching data:", error);
+    } else {
+      setResults(data);
+    }
+  };
+
   const navigate = useNavigate();
 
   const handleCardClick = (courseId) => {
     navigate(`/course/${courseId}`);
   };
+
+  const handleToggle = () => {
+    setSearchType((prevType) => (prevType === 'professor' ? 'course' : 'professor'));
+    setResults([]);
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch(); 
+    }
+};
   
-
-
 
   return (
     <div className="search-page">
       <h1>CWRU-RMP</h1>
       <div className="search-container">
+      <button onClick={handleToggle}>
+          Search by {searchType === 'professor' ? 'Course' : 'Professor'} instead
+        </button>
+        
         <input
           type="text"
-          placeholder="Search for professor name or course id..."
+          placeholder={`Search for ${searchType === 'professor' ? 'professor name' : 'course ID'}...`}
           value={searchTerm}
           onChange={(e) => {
             setSearchTerm(e.target.value)
           }}
+          onKeyDown={handleKeyPress}
         />
         <button className="search-button" onClick={handleSearch}>Search</button>
       </div>
@@ -53,9 +90,13 @@ const Search = () => {
             <button
               key={index}
               className="result-card"
-              onClick={() => handleCardClick(result.course_id)} // Call the function with course_id
+              onClick={() =>
+                handleCardClick(searchType === "course" ? result.course_id : `${result.first_name} ${result.last_name}`)
+              }
             >
-              {result.course_id}
+              {searchType === "course"
+                ? result.course_id
+                : `${result.first_name} ${result.last_name}`}
             </button>
           ))
         ) : (
