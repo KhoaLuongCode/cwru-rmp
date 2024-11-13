@@ -10,19 +10,27 @@ jest.mock('../supabaseClient', () => ({
   supabase: {
     from: jest.fn((tableName) => ({
       select: jest.fn(() => ({
-        ilike: jest.fn(() => {
-          // Mock data based on the table name
-          if (tableName === 'courses') {
-            return Promise.resolve({ data: [{ course_id: 'CSDS101' }], error: null });
-          } else if (tableName === 'professors') {
-            return Promise.resolve({ data: [{ first_name: 'Harold'}], error: null });
-          }
-          return Promise.resolve({ data: [], error: null }); 
-        }),
+        ilike: jest.fn(() => ({
+          // Return mock data specifically for the courses table when ilike is called
+          then: jest.fn((resolve) => {
+            if (tableName === 'courses') {
+              resolve({ data: [{ course_id: 'CSDS101' }], error: null });
+            }
+          }),
+        })),
+        or: jest.fn(() => ({
+          // Return mock data specifically for the professors table when or is called
+          then: jest.fn((resolve) => {
+            if (tableName === 'professors') {
+              resolve({ data: [{ first_name: 'Harold', last_name: 'Connachmacher' }], error: null });
+            }
+          }),
+        })),
       })),
     })),
   },
 }));
+
 
 
 
@@ -76,16 +84,17 @@ describe('Search Component', () => {
     expect(resultCard).toBeInTheDocument();
   });
 
-  // test('displays professor search results when search button is clicked', async () => {
-  //   const buttonElement = screen.getByText("Search");
+  test('displays professor search results when search button is clicked', async () => {
+    const buttonElement = screen.getByText("Search");
+    expect(buttonElement).toBeInTheDocument();
 
-  //   await act(async () => {
-  //     fireEvent.click(buttonElement); // Simulate button click
-  //   });
+    await act(async () => {
+      fireEvent.click(buttonElement); // Simulate button click
+    });
 
-  //   const resultCard = await screen.findByText(/Harold/i);
-  //   expect(resultCard).toBeInTheDocument();
-  // });
+    const resultCard = await screen.findByText(/Harold/i);
+    expect(resultCard).toBeInTheDocument();
+  });
 
   test('displays course search results when enter is clicked', async () => {
     const searchInput = screen.getByPlaceholderText(/Search for/i);
@@ -95,7 +104,7 @@ describe('Search Component', () => {
     });
     await act(async () => {
       fireEvent.change(searchInput, { target: { value: 'CS101' } });
-     fireEvent.keyDown(searchInput, { key: 'Enter', code: 'Enter' });
+      fireEvent.keyDown(searchInput, { key: 'Enter', code: 'Enter' });
     });
     const resultCard = await screen.findByText('CSDS101');
     expect(resultCard).toBeInTheDocument();
@@ -121,4 +130,5 @@ describe('Search Component', () => {
 
     expect(mockNavigate).toHaveBeenCalledWith('/course/CSDS101');
   });
+
 });
