@@ -105,14 +105,14 @@ const CoursePage = () => {
                                     <p><strong>Workload:</strong> {entry.workload}</p>
                                 </div>
                                 <p className="comment"><strong>Comment:</strong> {entry.comment}</p>
-                                {/* Add more fields as needed */}
+                                <p><strong>Submitted At:</strong> {formatDate(entry.submitted_at)}</p> 
                             </div>
                             <div className="vote-buttons">
                                 <button onClick={() => handleUpvote(entry.entry_id, entry.upvote)}>
-                                    👍 Upvote ({entry.upvote})
+                                    ↑ Upvote ({entry.upvote})
                                 </button>
                                 <button onClick={() => handleDownvote(entry.entry_id, entry.downvote)}>
-                                    👎 Downvote ({entry.downvote})
+                                    ↓ Downvote ({entry.downvote})
                                 </button>
                             </div>
                         </div>
