@@ -76,7 +76,7 @@ export default function Account({ session }) {
         if (error.message.includes("email_check")) {
           showErrorToast('Only @case.edu email addresses are allowed. Please enter a valid email')
         } else {
-          alert(error.message)
+          showErrorToast('something went wrong...')
         }
       } finally {
         setLoading(false)

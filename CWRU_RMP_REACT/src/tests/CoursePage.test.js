@@ -6,7 +6,6 @@ jest.mock('react-router-dom', () => ({
     useParams: jest.fn(),
   }));
   
-  // 2. Define initial mock data
   let mockData = [
     {
       entry_id: '2',
