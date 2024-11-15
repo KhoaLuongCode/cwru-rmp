@@ -1,44 +1,38 @@
-// Submit.js
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
 import coursesData from '../data/courses.json'; // Import the courses JSON
-import '../css/Submit.css'
+import '../css/Submit.css';
 import { showSuccessToast, showErrorToast } from '../utils/Toastr'; // Import toast functions
-import { ToastContainer, toast } from 'react-toastify';
 import professorData from '../data/professors.json';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function Submit({ session }) {
   const [formData, setFormData] = useState({
     professor_name: '',
     course_id: '',
-    quality: 0,
-    difficulty: 0,
+    quality: '',
+    difficulty: '',
     comment: '',
     workload: 0,
     semester: '',
     textbook: '',
-    extra_credit: false,
+    extra_credit: 'No', 
     study_tips: '',
     upvote: 0,
     downvote: 0,
     office_hours: ''
   });
 
-  const notify = () => toast("Wow so easy!");
-
   const [courses, setCourses] = useState([]);
   const [professors, setProfessors] = useState([]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    toast.success('Successfully logged out!', {
-      position: "top-right",
-      autoClose: 3000, // Toast disappears after 3 seconds
-    });
+    showSuccessToast('Successfully logged out!');
   };
 
   useEffect(() => {
-    // Load courses from the imported JSON
+    // Load courses and professors from the imported JSON
     setCourses(coursesData);
     setProfessors(professorData);
     // Optional: Add any additional logic here
@@ -64,7 +58,7 @@ export default function Submit({ session }) {
       return;
     }
 
-    // Convert numeric string values to numbers
+    // Convert numeric and boolean string values to appropriate data types
     const dataToInsert = {
       ...formData,
       quality: Number(formData.quality),
@@ -72,8 +66,9 @@ export default function Submit({ session }) {
       workload: Number(formData.workload),
       upvote: Number(formData.upvote),
       downvote: Number(formData.downvote),
-      extra_credit: Boolean(formData.extra_credit),
+      extra_credit: formData.extra_credit === 'Yes', // Convert to boolean
       user_id: session.user.id,
+      submitted_at: new Date().toISOString() // Add current timestamp here
     };
 
     // Save feedback to Supabase
@@ -90,13 +85,13 @@ export default function Submit({ session }) {
       setFormData({
         professor_name: '',
         course_id: '',
-        quality: 0,
-        difficulty: 0,
+        quality: '',
+        difficulty: '',
         comment: '',
         workload: 0,
         semester: '',
         textbook: '',
-        extra_credit: false,
+        extra_credit: 'No', // reset to 'No'
         study_tips: '',
         upvote: 0,
         downvote: 0,
@@ -239,13 +234,8 @@ export default function Submit({ session }) {
               <select
                 id="extra_credit"
                 name="extra_credit"
-                value={formData.extra_credit ? "Yes" : "No"}
-                onChange={(e) => 
-                  setFormData((prevData) => ({
-                    ...prevData,
-                    extra_credit: e.target.value === "Yes"
-                  }))
-                }
+                value={formData.extra_credit}
+                onChange={handleChange}
                 required
               >
                 <option value="Yes">Yes</option>
@@ -274,19 +264,15 @@ export default function Submit({ session }) {
               />
             </div>
             
-            <div className="form-group">
-              <button className="button block" type="submit">
-                Submit Feedback
-              </button>
-            </div>
+            <button type="submit" className="submit-button">Submit Feedback</button>
           </form>
         </div>
 
-        <div>
-          <button className="button block signout-button" onClick={handleLogout}>
-            Sign Out
-          </button>
+        <div className="logout-section">
+          <button onClick={handleLogout}>Logout</button>
         </div>
+
+        <ToastContainer />
       </div>
     </div>
   );
