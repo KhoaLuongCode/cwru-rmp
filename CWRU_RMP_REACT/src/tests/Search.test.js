@@ -22,7 +22,7 @@ jest.mock('../supabaseClient', () => ({
           // Return mock data specifically for the professors table when or is called
           then: jest.fn((resolve) => {
             if (tableName === 'professors') {
-              resolve({ data: [{ first_name: 'Harold', last_name: 'Connachmacher' }], error: null });
+              resolve({ data: [{ first_name: 'Harold', last_name: 'Connamacher' }], error: null });
             }
           }),
         })),
@@ -130,5 +130,21 @@ describe('Search Component', () => {
 
     expect(mockNavigate).toHaveBeenCalledWith('/course/CSDS101');
   });
+
+  test('navigates to prof page on card click', async() => {
+    const mockNavigate = jest.fn();
+    useNavigate.mockReturnValue(mockNavigate); 
+    const buttonElement = screen.getByText("Search");
+
+    await act(async () => {
+      fireEvent.click(buttonElement); // Simulate button click
+    });
+
+    const resultCard = await screen.findByText(/Harold/i);
+        await act(async () => {
+      fireEvent.click(resultCard); // Simulate button click
+    });
+    expect(mockNavigate).toHaveBeenCalledWith('/professor/Harold-Connamacher');
+  })
 
 });
