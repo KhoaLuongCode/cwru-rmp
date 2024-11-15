@@ -7,7 +7,6 @@
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
     "@supabase/supabase-js": "^2.0.4",
-    "@testing-library/user-event": "^12.8.3",
     "jsdom": "^25.0.1",
     "llm-scraper": "^1.5.1",
     "playwright": "^1.48.0",
@@ -48,6 +47,7 @@
     "@babel/preset-react": "^7.25.9",
     "@testing-library/jest-dom": "^6.6.2",
     "@testing-library/react": "^12.1.5",
+    "@testing-library/user-event": "^14.5.2",
     "dotenv": "^16.4.5",
     "jest": "^27.5.1"
   }
