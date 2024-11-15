@@ -22,6 +22,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+        cache-dependency-path: 'CWRU_RMP_REACT/package-lock.json'
     - name: Install Dependencies
       run: |
         cd CWRU_RMP_REACT  # Navigate into the CWRU_RMP_REACT directory
