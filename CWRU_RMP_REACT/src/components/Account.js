@@ -1,13 +1,20 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../supabaseClient'
 import Avatar from './Avatar'
-import { showSuccessToast, showErrorToast } from '../utils/Toastr';
+import { showSuccessToast, showErrorToast } from '../utils/Toastr'
+import { useNavigate } from 'react-router-dom'
 import '../css/Account.css'
 
 export default function Account({ session }) {
   const [loading, setLoading] = useState(true)
-  const [profile, setProfile] = useState({ username: '', avatar_url: '', year: '', field_of_study: '' })
+  const [profile, setProfile] = useState({
+    username: '',
+    avatar_url: '',
+    year: '',
+    field_of_study: ''
+  })
   const [entries, setEntries] = useState([])
+  const navigate = useNavigate()
 
   useEffect(() => {
     async function fetchData() {
@@ -27,7 +34,7 @@ export default function Account({ session }) {
           username: profileData?.username || '',
           avatar_url: profileData?.avatar_url || '',
           year: profileData?.year || '',
-          field_of_study: profileData?.field_of_study || '',
+          field_of_study: profileData?.field_of_study || ''
         })
 
         // Fetch related entries
@@ -37,7 +44,7 @@ export default function Account({ session }) {
           .eq('user_id', user.id)
         if (entriesError) throw entriesError
 
-        setEntries(entriesData || [])
+        setEntries(entriesData || {})
       } catch (error) {
         console.warn(error.message)
       } finally {
@@ -48,41 +55,38 @@ export default function Account({ session }) {
     fetchData()
   }, [session])
 
-    async function updateProfile(updates) {
-      try {
-        setLoading(true)
-        const { user } = session
-    
-        const profileUpdates = {
-          id: user.id,
-          user_email: user.email,
-          ...updates,
-          updated_at: new Date(),
-        }
-    
-        let { data, error } = await supabase.from('profiles').upsert(profileUpdates)
-        if (error) {
-          // Check for the duplicate key error specifically for the username
-          if (error.message.includes("duplicate key value violates unique constraint \"profiles_username_key\"")) {
-            showErrorToast("This username already exists, please try another one.")
-          } else {
-            throw error // rethrow if it's a different error
-          }
-        }
-    
-        // Refresh profile data...
-      } catch (error) {
-        if (error.message.includes("email_check")) {
-          showErrorToast('Only @case.edu email addresses are allowed. Please enter a valid email')
-        } else {
-          alert(error.message)
-        }
-      } finally {
-        setLoading(false)
+  async function updateProfile(updates) {
+    try {
+      setLoading(true)
+      const { user } = session
+
+      const profileUpdates = {
+        id: user.id,
+        user_email: user.email,
+        ...updates,
+        updated_at: new Date()
       }
+
+      let { data, error } = await supabase.from('profiles').upsert(profileUpdates)
+      if (error) {
+        if (error.message.includes("duplicate key value violates unique constraint \"profiles_username_key\"")) {
+          showErrorToast("This username already exists, please try another one.")
+        } else {
+          throw error // rethrow if it's a different error
+        }
+      }
+
+      // Refresh profile data...
+    } catch (error) {
+      if (error.message.includes("email_check")) {
+        showErrorToast('Only @case.edu email addresses are allowed. Please enter a valid email')
+      } else {
+        alert(error.message)
+      }
+    } finally {
+      setLoading(false)
     }
-  
-  
+  }
 
   const { username, avatar_url, year, field_of_study } = profile
 
@@ -90,16 +94,21 @@ export default function Account({ session }) {
     try {
       setLoading(true)
       const { error } = await supabase.auth.updateUser({
-        email: session.user.email,
+        email: session.user.email
       })
       if (error) throw error
       showSuccessToast('Verification email has been resent. Please check your inbox.')
     } catch (error) {
       console.error('Error resending verification email:', error)
-      showErrorToast(error.error_description || error.message);
+      showErrorToast(error.error_description || error.message)
     } finally {
       setLoading(false)
     }
+  }
+
+  const handleResetPassword = () => {
+    // Redirect to ChangePassword page
+    navigate('/change-password')
   }
 
   return (
@@ -163,6 +172,12 @@ export default function Account({ session }) {
             </div>
           ))
         )}
+      </div>
+
+      <div className="reset-password">
+        <button onClick={handleResetPassword} className="reset-password-button">
+          Reset Password
+        </button>
       </div>
     </div>
   )

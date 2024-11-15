@@ -11,6 +11,7 @@ import CoursePage from '../components/CoursePage';
 import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { showSuccessToast, showErrorToast } from '../utils/Toastr';
+import ChangePassword from '../components/ChangePassword';
 
 export default function Home() {
   const [session, setSession] = useState(null)
@@ -99,6 +100,7 @@ export default function Home() {
               }
             />
           )}
+          <Route path="/change-password" element={<ChangePassword session={session} />} />
         </Routes>
 
 
