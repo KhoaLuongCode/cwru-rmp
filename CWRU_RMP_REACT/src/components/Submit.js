@@ -1,8 +1,7 @@
-// Submit.js
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
 import coursesData from '../data/courses.json'; // Import the courses JSON
-import '../css/Submit.css'
+import '../css/Submit.css';
 import { showSuccessToast, showErrorToast } from '../utils/Toastr'; // Import toast functions
 import { ToastContainer, toast } from 'react-toastify';
 import professorData from '../data/professors.json';
@@ -74,6 +73,7 @@ export default function Submit({ session }) {
       downvote: Number(formData.downvote),
       extra_credit: Boolean(formData.extra_credit),
       user_id: session.user.id,
+      submitted_at: new Date().toISOString() // Add current timestamp here
     };
 
     // Save feedback to Supabase
@@ -274,19 +274,15 @@ export default function Submit({ session }) {
               />
             </div>
             
-            <div className="form-group">
-              <button className="button block" type="submit">
-                Submit Feedback
-              </button>
-            </div>
+            <button type="submit" className="submit-button">Submit Feedback</button>
           </form>
         </div>
 
-        <div>
-          <button className="button block signout-button" onClick={handleLogout}>
-            Sign Out
-          </button>
+        <div className="logout-section">
+          <button onClick={handleLogout}>Logout</button>
         </div>
+
+        <ToastContainer />
       </div>
     </div>
   );
