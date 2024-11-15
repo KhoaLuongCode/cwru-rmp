@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import "../css/Search.css";
 
+
 const CoursePage = () => {
     const { courseId } = useParams();
     const [feedbackData, setFeedbackData] = useState({});
