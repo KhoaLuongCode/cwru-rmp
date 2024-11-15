@@ -183,7 +183,6 @@ describe('Account Component', () => {
           upsert: upsertMock,
         };
       }
-      // ... handle other tables if necessary
     });
 
     render(<Account session={session} />);
@@ -198,6 +197,48 @@ describe('Account Component', () => {
       expect(upsertMock).toHaveBeenCalled();
       expect(require('../utils/Toastr').showErrorToast).toHaveBeenCalledWith(
         'Only @case.edu email addresses are allowed. Please enter a valid email'
+      );
+    });
+  });
+
+  test('display generic error', async () =>{
+    const upsertMock = jest.fn().mockResolvedValue({
+        data: [],
+        error: {
+          message: 'error',
+        },
+      });
+
+      supabase.from.mockImplementation((tableName) => {
+        if (tableName === 'profiles') {
+          return {
+            select: jest.fn().mockReturnThis(),
+            eq: jest.fn().mockReturnThis(),
+            single: jest.fn().mockResolvedValue({
+              data: {
+                username: 'testUser',
+                year: 'Sophomore',
+                field_of_study: 'CS',
+              },
+              error: null,
+            }),
+            upsert: upsertMock,
+          };
+        }
+      });
+
+      render(<Account session={session} />);
+
+    await waitFor(() => {
+      expect(screen.getByText(/Update/i)).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByText(/Update/i));
+
+    await waitFor(() => {
+      expect(upsertMock).toHaveBeenCalled();
+      expect(require('../utils/Toastr').showErrorToast).toHaveBeenCalledWith(
+        'something went wrong...'
       );
     });
   });
