@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { supabase } from '../supabaseClient'
 import Avatar from './Avatar'
 import { showSuccessToast, showErrorToast } from '../utils/Toastr';
@@ -49,6 +49,7 @@ export default function Account({ session }) {
   }, [session])
 
     async function updateProfile(updates) {
+      console.log('Updating profile with:', { username: profile.username, year: profile.year, field_of_study: profile.field_of_study });
       try {
         setLoading(true)
         const { user } = session
@@ -118,6 +119,7 @@ export default function Account({ session }) {
             value={profile.year}
             onChange={(e) => setProfile({ ...profile, year: e.target.value })}
             className="input-field"
+            placeholder="Select Year"
           >
             <option value="">Select Year</option>
             <option value="Freshman">Freshman</option>
@@ -134,7 +136,7 @@ export default function Account({ session }) {
           />
         </div>
         <button
-          onClick={() => updateProfile({ username: profile.username, year: profile.year, field_of_study: profile.field_of_study })}
+          onClick={() => {updateProfile({ username: profile.username, year: profile.year, field_of_study: profile.field_of_study })}}
           disabled={loading}
           className="update-button"
         >
