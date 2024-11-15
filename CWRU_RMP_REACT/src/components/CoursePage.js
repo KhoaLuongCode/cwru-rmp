@@ -1,4 +1,3 @@
-//displays search result for each course
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
@@ -43,12 +42,10 @@ const CoursePage = () => {
         };
         fetchFeedback();
 
-
-
     }, [courseId]);
 
     return (
-        <div>
+        <div className="search-page">
             <h1>{courseId}</h1>
             <div className="averages">
                 <h2>Average Quality: {averageQuality.toFixed(2)}</h2>
@@ -58,15 +55,22 @@ const CoursePage = () => {
             {Object.keys(feedbackData).map((section) => (
                 <div key={section} className="section">
                     {feedbackData[section].map((entry, index) => (
-                        <section key={index} className="feedback-entry">
-                            <p><strong>User:</strong> {entry.profiles.username}</p>
-                            <p><strong>Professor:</strong> {entry.professor_name}</p>
-                            <p><strong>Quality:</strong> {entry.quality}</p>
-                            <p><strong>Difficulty:</strong> {entry.difficulty}</p>
-                            <p><strong>Comment:</strong> {entry.comment}</p>
-                            <p><strong>workload:</strong> {entry.workload}</p>
-                            {/* Add more fields as needed */}
-                        </section>
+                        <div key={index} className="result-card">
+                            <div className="entry-header">
+                                <h3>{entry.profiles.username}</h3>
+                                <span className="course-id">{entry.course_id}</span>
+                            </div>
+                            <div className="entry-body">
+                                <p><strong>Professor:</strong> {entry.professor_name}</p>
+                                <div className="ratings">
+                                    <p><strong>Quality:</strong> {entry.quality}</p>
+                                    <p><strong>Difficulty:</strong> {entry.difficulty}</p>
+                                    <p><strong>Workload:</strong> {entry.workload}</p>
+                                </div>
+                                <p className="comment"><strong>Comment:</strong> {entry.comment}</p>
+                                {/* Add more fields as needed */}
+                            </div>
+                        </div>
                     ))}
                 </div>
             ))}

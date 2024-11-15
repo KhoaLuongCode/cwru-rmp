@@ -8,6 +8,7 @@ import Account from '../components/Account'
 import Search from '../components/Search'
 import Submit from '../components/Submit'
 import CoursePage from '../components/CoursePage';
+import ProfessorPage from '../components/ProfessorPage'; 
 import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { showSuccessToast, showErrorToast } from '../utils/Toastr';
@@ -60,6 +61,7 @@ export default function Home() {
         <Routes>
           <Route path="/search" element={<Search />} />
           <Route path="/course/:courseId" element={<CoursePage />} />
+          <Route path="/professor/:professorId" element={<ProfessorPage />} />
 
           <Route 
             path="/submit" 

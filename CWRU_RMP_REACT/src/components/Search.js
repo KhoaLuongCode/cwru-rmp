@@ -1,9 +1,7 @@
-//search for courses 
 import React, { useState } from "react";
 import { supabase } from '../supabaseClient'
 import '../css/Search.css';
 import { useNavigate } from 'react-router-dom';
-
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -11,15 +9,14 @@ const Search = () => {
   const [results, setResults] = useState([]);
 
   const handleSearch = async () => {
-    if (searchType === "course"){
-      handleSearchCourse();
-    }else{
-      handleSearchProf();
+    if (searchType === "course") {
+      await handleSearchCourse();
+    } else {
+      await handleSearchProf();
     }
-  }
+  };
 
   const handleSearchCourse = async () => {
-    // For now, we'll just leave the results as empty placeholders
     const { data, error } = await supabase
       .from('courses')
       .select('course_id')
@@ -32,9 +29,7 @@ const Search = () => {
     }
   };
 
-
   const handleSearchProf = async () => {
-    // For now, we'll just leave the results as empty placeholders
     const { data, error } = await supabase
       .from('professors')
       .select('first_name, last_name')
@@ -49,8 +44,13 @@ const Search = () => {
 
   const navigate = useNavigate();
 
-  const handleCardClick = (courseId) => {
+  const handleCourseCardClick = (courseId) => {
     navigate(`/course/${courseId}`);
+  };
+
+  const handleProfessorCardClick = (first_name, last_name) => {
+    const formattedName = `${first_name}-${last_name}`;
+    navigate(`/professor/${formattedName}`);
   };
 
   const handleToggle = () => {
@@ -60,19 +60,18 @@ const Search = () => {
 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
-      handleSearch(); 
+      handleSearch();
     }
-};
-  
+  };
 
   return (
     <div className="search-page">
       <h1>CWRU-RMP</h1>
       <div className="search-container">
-      <button onClick={handleToggle}>
+        <button onClick={handleToggle}>
           Search by {searchType === 'professor' ? 'Course' : 'Professor'} instead
         </button>
-        
+
         <input
           type="text"
           placeholder={`Search for ${searchType === 'professor' ? 'professor name' : 'course ID'}...`}
@@ -90,9 +89,13 @@ const Search = () => {
             <button
               key={index}
               className="result-card"
-              onClick={() =>
-                handleCardClick(searchType === "course" ? result.course_id : `${result.first_name} ${result.last_name}`)
-              }
+              onClick={() => {
+                if (searchType === "course") {
+                  handleCourseCardClick(result.course_id);
+                } else {
+                  handleProfessorCardClick(result.first_name, result.last_name);
+                }
+              }}
             >
               {searchType === "course"
                 ? result.course_id
