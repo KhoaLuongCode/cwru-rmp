@@ -1,8 +1,9 @@
+// src/components/CoursePage.js
+
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import "../css/Search.css";
-
 
 const CoursePage = () => {
     const { courseId } = useParams();
@@ -76,10 +77,10 @@ const CoursePage = () => {
         }
     };
 
-    // Function to format the submitted_at timestamp (Month, Year)
+    // Function to format the submitted_at timestamp (Month, Year) in UTC
     const formatDate = (dateString) => {
         const date = new Date(dateString);
-        return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+        return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: undefined, timeZone: 'UTC' });
     };
 
     return (
