@@ -4,6 +4,7 @@ import coursesData from '../data/courses.json'; // Import the courses JSON
 import '../css/Submit.css'
 import { showSuccessToast, showErrorToast } from '../utils/Toastr'; // Import toast functions
 import professorData from '../data/professors.json';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function Submit({ session }) {
   const [formData, setFormData] = useState({
@@ -67,6 +68,7 @@ export default function Submit({ session }) {
       downvote: Number(formData.downvote),
       extra_credit: formData.extra_credit === 'Yes', // Convert to boolean
       user_id: session.user.id,
+      submitted_at: new Date().toISOString() // Add current timestamp here
     };
 
     // Save feedback to Supabase
@@ -275,6 +277,8 @@ export default function Submit({ session }) {
             Sign Out
           </button>
         </div>
+
+        <ToastContainer />
       </div>
     </div>
   );
