@@ -87,21 +87,6 @@ export default function Account({ session }) {
 
   const { username, avatar_url, year, field_of_study } = profile
 
-  const resendVerificationEmail = async () => {
-    try {
-      setLoading(true)
-      const { error } = await supabase.auth.updateUser({
-        email: session.user.email,
-      })
-      if (error) throw error
-      showSuccessToast('Verification email has been resent. Please check your inbox.')
-    } catch (error) {
-      console.error('Error resending verification email:', error)
-      showErrorToast(error.error_description || error.message);
-    } finally {
-      setLoading(false)
-    }
-  }
 
   return (
     <div className="account-container">
