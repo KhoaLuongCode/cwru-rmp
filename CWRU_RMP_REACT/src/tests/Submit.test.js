@@ -48,7 +48,7 @@ describe('Submit Component', () => {
     const { getByText } = render(<Submit session={session} />);
 
     // Click the "Sign Out" button
-    fireEvent.click(getByText(/Sign Out/i));
+    fireEvent.click(getByText(/Logout/i));
 
     // Wait for signOut and toast to be called
     await waitFor(() => {
