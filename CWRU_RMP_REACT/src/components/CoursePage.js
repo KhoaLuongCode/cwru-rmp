@@ -9,40 +9,77 @@ const CoursePage = () => {
     const [averageQuality, setAverageQuality] = useState(0);
     const [averageDifficulty, setAverageDifficulty] = useState(0);
 
+    // Move fetchFeedback outside useEffect to make it accessible in upvote/downvote handlers
+    const fetchFeedback = async () => {
+        // Fetch data from Supabase
+        const { data, error } = await supabase
+            .from('entry')
+            .select('*, profiles!fk_user(username)')
+            .eq('course_id', courseId);
+
+        if (error) {
+            console.error('Error fetching feedback:', error);
+            return;
+        }
+        console.log('Fetched data:', data);
+
+        // Sort feedback data by submitted_at (most recent first)
+        const sortedData = data.sort((a, b) => new Date(b.submitted_at) - new Date(a.submitted_at));
+
+        // Group feedback by sections
+        const groupedFeedback = sortedData.reduce((acc, entry) => {
+            const { section } = entry;
+            if (!acc[section]) acc[section] = [];
+            acc[section].push(entry);
+            return acc;
+        }, {});
+
+        setFeedbackData(groupedFeedback);
+        const totalQuality = sortedData.reduce((acc, entry) => acc + entry.quality, 0);
+        const totalDifficulty = sortedData.reduce((acc, entry) => acc + entry.difficulty, 0);
+
+        setAverageQuality(totalQuality / sortedData.length);
+        setAverageDifficulty(totalDifficulty / sortedData.length);
+    };
+
     useEffect(() => {
         document.title = `Course: ${courseId}`;
-        const fetchFeedback = async () => {
-            // Fetch data from Supabase
-            const { data, error } = await supabase
-                .from('entry')
-                .select('*, profiles!fk_user(username)')
-                .eq('course_id', courseId);
-
-            if (error) {
-                console.error('Error fetching feedback:', error);
-                return;
-            }
-            console.log('Fetched data:', data);
-
-            // Group feedback by sections
-            const groupedFeedback = data.reduce((acc, entry) => {
-                const { section } = entry;
-                if (!acc[section]) acc[section] = [];
-                acc[section].push(entry);
-                return acc;
-            }, {});
-
-            setFeedbackData(groupedFeedback);
-            const totalQuality = data.reduce((acc, entry) => acc + entry.quality, 0);
-            const totalDifficulty = data.reduce((acc, entry) => acc + entry.difficulty, 0);
-
-            setAverageQuality(totalQuality / data.length);
-            setAverageDifficulty(totalDifficulty / data.length);
-
-        };
         fetchFeedback();
-
     }, [courseId]);
+
+    // Function to handle upvote
+    const handleUpvote = async (entryId, currentUpvotes) => {
+        const { error } = await supabase
+            .from('entry')
+            .update({ upvote: currentUpvotes + 1 })
+            .eq('entry_id', entryId);
+
+        if (error) {
+            console.error('Error updating upvote:', error);
+        } else {
+            fetchFeedback(); // Refresh feedback data to show updated votes
+        }
+    };
+
+    // Function to handle downvote
+    const handleDownvote = async (entryId, currentDownvotes) => {
+        const { error } = await supabase
+            .from('entry')
+            .update({ downvote: currentDownvotes + 1 })
+            .eq('entry_id', entryId);
+
+        if (error) {
+            console.error('Error updating downvote:', error);
+        } else {
+            fetchFeedback(); // Refresh feedback data to show updated votes
+        }
+    };
+
+    // Function to format the submitted_at timestamp (Month, Year)
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+    };
 
     return (
         <div className="search-page">
@@ -69,6 +106,14 @@ const CoursePage = () => {
                                 </div>
                                 <p className="comment"><strong>Comment:</strong> {entry.comment}</p>
                                 {/* Add more fields as needed */}
+                            </div>
+                            <div className="vote-buttons">
+                                <button onClick={() => handleUpvote(entry.entry_id, entry.upvote)}>
+                                    👍 Upvote ({entry.upvote})
+                                </button>
+                                <button onClick={() => handleDownvote(entry.entry_id, entry.downvote)}>
+                                    👎 Downvote ({entry.downvote})
+                                </button>
                             </div>
                         </div>
                     ))}
