@@ -19,7 +19,7 @@ export default function CreatePassword() {
 
     try {
       setLoading(true)
-      const user = supabase.auth.user()
+      const user = supabase.auth.getUser()
       if (user) {
         const { error } = await supabase.auth.updateUser({
           password,
