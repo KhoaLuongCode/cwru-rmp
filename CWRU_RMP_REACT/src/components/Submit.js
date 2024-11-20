@@ -197,7 +197,20 @@ export default function Submit({ session }) {
                 id="workload"
                 name="workload"
                 value={formData.workload}
-                onChange={handleChange}
+                onChange={(e) => {
+                  const { name, value } = e.target;
+                  if (value < 0) {
+                    showErrorToast('Workload cannot be negative.');
+                    return;
+                  }
+                  setFormData((prevData) => ({
+                    ...prevData,
+                    [name]: value
+                  }));
+                }}
+                onInput={(e) => {
+                  if (e.target.value < 0) e.target.value = 0;
+                }}
                 required
               />
             </div>
