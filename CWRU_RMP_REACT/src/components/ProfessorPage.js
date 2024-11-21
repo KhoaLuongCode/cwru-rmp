@@ -62,6 +62,7 @@ const ProfessorPage = () => {
                 <p><strong>Quality:</strong> {entry.quality}</p>
                 <p><strong>Difficulty:</strong> {entry.difficulty}</p>
                 <p><strong>Workload:</strong> {entry.workload}</p>
+                <p><strong>Course:</strong> {entry.course_id}</p>
               </div>
               <p className="feedback-comment"><strong>Comment:</strong> {entry.comment}</p>
               {/* Add more fields as needed */}

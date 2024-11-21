@@ -9,6 +9,11 @@ export default function Account({ session }) {
   const [profile, setProfile] = useState({ username: '', avatar_url: '', year: '', field_of_study: '' })
   const [entries, setEntries] = useState([])
 
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    showSuccessToast('Successfully logged out!');
+  };
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -151,6 +156,11 @@ export default function Account({ session }) {
           ))
         )}
       </div>
+
+      <div className="logout-section">
+      <button onClick={handleLogout}>Logout</button>
+      </div>
+
     </div>
   )
 }

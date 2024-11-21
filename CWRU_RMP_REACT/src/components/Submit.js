@@ -26,11 +26,6 @@ export default function Submit({ session }) {
   const [courses, setCourses] = useState([]);
   const [professors, setProfessors] = useState([]);
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    showSuccessToast('Successfully logged out!');
-  };
-
   useEffect(() => {
     // Load courses and professors from the imported JSON
     setCourses(coursesData);
@@ -279,10 +274,6 @@ export default function Submit({ session }) {
             
             <button type="submit" className="submit-button">Submit Feedback</button>
           </form>
-        </div>
-
-        <div className="logout-section">
-          <button onClick={handleLogout}>Logout</button>
         </div>
 
         <ToastContainer />
