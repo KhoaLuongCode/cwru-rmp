@@ -19,7 +19,7 @@ export default function Account({ session }) {
       try {
         setLoading(true)
         const { user } = session
-
+  
         // Fetch profile
         const { data: profileData, error: profileError } = await supabase
           .from('profiles')
@@ -27,31 +27,39 @@ export default function Account({ session }) {
           .eq('id', user.id)
           .single()
         if (profileError && profileError.code !== 'PGRST116') throw profileError
-
+  
         setProfile({
           username: profileData?.username || '',
           avatar_url: profileData?.avatar_url || '',
           year: profileData?.year || '',
           field_of_study: profileData?.field_of_study || '',
         })
-
-        // Fetch related entries
+  
+        // Fetch related entries and include the submitted_at field
         const { data: entriesData, error: entriesError } = await supabase
           .from('entry')
-          .select(`professor_name, course_id, quality, difficulty, comment`)
+          .select(`professor_name, course_id, quality, difficulty, comment, submitted_at`)
           .eq('user_id', user.id)
         if (entriesError) throw entriesError
-
-        setEntries(entriesData || [])
+  
+        // Sort entries by submitted_at in descending order
+        const sortedEntries = (entriesData || []).sort((a, b) => new Date(b.submitted_at) - new Date(a.submitted_at))
+        setEntries(sortedEntries)
       } catch (error) {
         console.warn(error.message)
       } finally {
         setLoading(false)
       }
     }
-
+  
     fetchData()
   }, [session])
+
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(date);
+  };
 
     async function updateProfile(updates) {
       console.log('Updating profile with:', { username: profile.username, year: profile.year, field_of_study: profile.field_of_study });
@@ -154,6 +162,9 @@ export default function Account({ session }) {
                   <span>Difficulty: {entry.difficulty}</span>
                 </div>
                 <p className="comment">{entry.comment ? entry.comment : 'No comments'}</p>
+              </div>
+              <div className="entry-footer">
+                <span className="submitted-date">{formatDate(entry.submitted_at)}</span>
               </div>
             </div>
           ))

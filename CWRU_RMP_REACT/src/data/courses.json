@@ -130,5 +130,11 @@
       "course_name": "Biomedical Signals and Systems",
       "department": "Biomedical Engineering",
       "course_description": "Quantitative analysis of biomedical signals and physiological systems. Time domain and frequency domain analysis of linear systems. Fourier and Laplace transforms. A/D conversion and sampling. Filter design. Computational laboratory experiences with biomedical applications."
+    },
+    {
+      "course_id": "PSCL101",
+      "course_name": "General Psychology 1",
+      "department": "Psychology",
+      "course_description": "Methods, research, and theories of psychology. Basic research from such areas as psychophysiology, sensation, perception, development, memory, learning, psychopathology, and social psychology."
     }
   ]

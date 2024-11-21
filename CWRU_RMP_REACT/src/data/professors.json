@@ -124,5 +124,12 @@
     "last_name": "Yin",
     "department": "Computer and Data Sciences",
     "email": "yu.yin@case.edu"
+  },
+  {
+    "professor_id": "20",
+    "first_name": "Rita",
+    "last_name": "Obeid",
+    "department": "Psychology",
+    "email": "rita.obeid@case.edu"
   }
 ]
