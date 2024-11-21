@@ -58,7 +58,7 @@ export default function Account({ session }) {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(date);
+    return new Intl.DateTimeFormat('en-US', { month: 'long',day: 'numeric', year: 'numeric' }).format(date);
   };
 
     async function updateProfile(updates) {

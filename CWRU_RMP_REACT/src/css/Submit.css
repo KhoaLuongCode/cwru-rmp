@@ -100,3 +100,23 @@ input[type="checkbox"] {
 .signout-button:hover {
     background-color: #c22d36;
 }
+
+.submit-button {
+    background-color: #28a745; /* Green background */
+    color: #ffffff; /* White text */
+    padding: 10px 15px; /* Padding for the button */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 14px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover and click effects */
+}
+
+.submit-button:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+.submit-button:active {
+    transform: scale(0.97); /* Slightly shrink button when clicked */
+}
+
