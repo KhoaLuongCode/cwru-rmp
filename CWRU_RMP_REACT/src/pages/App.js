@@ -60,7 +60,11 @@ export default function Home() {
 
         <Routes>
           <Route path="/search" element={<Search />} />
-          <Route path="/course/:courseId" element={<CoursePage />} />
+          <Route path="/course/:courseId" element={
+              session && session.user.email_confirmed_at ? 
+              <CoursePage session={session} /> : 
+              <Navigate to="/auth" />
+            } />
           <Route path="/professor/:professorId" element={<ProfessorPage />} />
 
           <Route 
