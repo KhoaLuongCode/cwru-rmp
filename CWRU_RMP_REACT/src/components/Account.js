@@ -75,6 +75,9 @@ export default function Account({ session }) {
             throw error // rethrow if it's a different error
           }
         }
+        else{
+          showSuccessToast("Your profile has been updated successfully");
+        }
     
         // Refresh profile data...
       } catch (error) {
