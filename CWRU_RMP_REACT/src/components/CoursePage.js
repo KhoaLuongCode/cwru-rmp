@@ -1,6 +1,6 @@
 // src/components/CoursePage.js
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import "../css/Search.css";
@@ -10,9 +10,29 @@ const CoursePage = () => {
     const [feedbackData, setFeedbackData] = useState({});
     const [averageQuality, setAverageQuality] = useState(0);
     const [averageDifficulty, setAverageDifficulty] = useState(0);
+    const [userVotes, setUserVotes] = useState({}); // Track user votes
+    const [user, setUser] = useState(null); // Current authenticated user
 
-    // Move fetchFeedback outside useEffect to make it accessible in upvote/downvote handlers
-    const fetchFeedback = async () => {
+    // Fetch the current user
+    useEffect(() => {
+        const fetchUser = async () => {
+            const { data: { user }, error } = await supabase.auth.getUser();
+            if (error) {
+                console.error('Error fetching user:', error);
+            } else {
+                setUser(user);
+            }
+        };
+
+        fetchUser();
+    }, []);
+
+    const fetchFeedback = useCallback(async () => {
+        if (!user) {
+            // User not authenticated
+            return;
+        }
+
         // Fetch data from Supabase
         const { data, error } = await supabase
             .from('entry')
@@ -24,6 +44,14 @@ const CoursePage = () => {
             return;
         }
         console.log('Fetched data:', data);
+
+        if (data.length === 0) {
+            setFeedbackData({});
+            setAverageQuality(0);
+            setAverageDifficulty(0);
+            setUserVotes({});
+            return;
+        }
 
         // Sort feedback data by submitted_at (most recent first)
         const sortedData = data.sort((a, b) => new Date(b.submitted_at) - new Date(a.submitted_at));
@@ -42,45 +70,222 @@ const CoursePage = () => {
 
         setAverageQuality(totalQuality / sortedData.length);
         setAverageDifficulty(totalDifficulty / sortedData.length);
-    };
+
+        // Fetch user votes for these entries
+        const entryIds = sortedData.map(entry => entry.entry_id);
+        const { data: votesData, error: votesError } = await supabase
+            .from('votes')
+            .select('entry_id, vote_type')
+            .in('entry_id', entryIds)
+            .eq('user_id', user.id);
+
+        if (votesError) {
+            console.error('Error fetching user votes:', votesError);
+            return;
+        }
+
+        // Create a map of entry_id to vote_type
+        const votesMap = {};
+        votesData.forEach(vote => {
+            votesMap[vote.entry_id] = vote.vote_type;
+        });
+
+        setUserVotes(votesMap);
+    }, [courseId, user]);
 
     useEffect(() => {
         document.title = `Course: ${courseId}`;
         fetchFeedback();
-    }, [courseId]);
+    }, [courseId, user, fetchFeedback]);
+
+    // Helper function to update feedbackData optimistically
+    const updateFeedbackData = (entryId, type) => {
+        setFeedbackData(prevData => {
+            const newData = { ...prevData };
+            for (const section in newData) {
+                newData[section] = newData[section].map(entry => {
+                    if (entry.entry_id === entryId) {
+                        let updatedEntry = { ...entry };
+                        if (type === 'upvote') {
+                            updatedEntry.upvote += 1;
+                            if (entry.vote_type === 'downvote') {
+                                updatedEntry.downvote -= 1;
+                            }
+                        } else if (type === 'downvote') {
+                            updatedEntry.downvote += 1;
+                            if (entry.vote_type === 'upvote') {
+                                updatedEntry.upvote -= 1;
+                            }
+                        } else if (type === 'undo_upvote') {
+                            updatedEntry.upvote -= 1;
+                        } else if (type === 'undo_downvote') {
+                            updatedEntry.downvote -= 1;
+                        }
+                        return updatedEntry;
+                    }
+                    return entry;
+                });
+            }
+            return newData;
+        });
+    };
 
     // Function to handle upvote
-    const handleUpvote = async (entryId, currentUpvotes) => {
-        const { error } = await supabase
-            .from('entry')
-            .update({ upvote: currentUpvotes + 1 })
-            .eq('entry_id', entryId);
+    const handleUpvote = async (entryId, currentUpvotes, currentDownvotes) => {
+        if (!user) {
+            alert('You must be logged in to vote.');
+            return;
+        }
 
-        if (error) {
-            console.error('Error updating upvote:', error);
+        const currentVote = userVotes[entryId];
+
+        if (currentVote === 'upvote') {
+            // Undo the upvote
+            const { error: deleteError } = await supabase
+                .from('votes')
+                .delete()
+                .eq('user_id', user.id)
+                .eq('entry_id', entryId);
+
+            if (deleteError) {
+                console.error('Error removing upvote:', deleteError);
+                return;
+            }
+
+            const { error: updateError } = await supabase
+                .from('entry')
+                .update({ upvote: currentUpvotes - 1 })
+                .eq('entry_id', entryId);
+
+            if (updateError) {
+                console.error('Error updating upvote count:', updateError);
+                return;
+            }
+
+            // Update local state
+            setUserVotes(prevVotes => {
+                const { [entryId]: _, ...rest } = prevVotes;
+                return rest;
+            });
+
+            // Optimistically update feedbackData
+            updateFeedbackData(entryId, 'undo_upvote');
         } else {
-            fetchFeedback(); // Refresh feedback data to show updated votes
+            // Add or change to upvote
+            const { error: voteError } = await supabase
+                .from('votes')
+                .upsert([{ user_id: user.id, entry_id: entryId, vote_type: 'upvote' }]);
+
+            if (voteError) {
+                console.error('Error recording vote:', voteError);
+                return;
+            }
+
+            const { error: updateError } = await supabase
+                .from('entry')
+                .update({ 
+                    upvote: currentUpvotes + 1, 
+                    downvote: currentVote === 'downvote' ? currentDownvotes - 1 : currentDownvotes 
+                })
+                .eq('entry_id', entryId);
+
+            if (updateError) {
+                console.error('Error updating upvote count:', updateError);
+                return;
+            }
+
+            // Update local state
+            setUserVotes(prevVotes => ({ ...prevVotes, [entryId]: 'upvote' }));
+
+            // Optimistically update feedbackData
+            if (currentVote === 'downvote') {
+                updateFeedbackData(entryId, 'upvote');
+            } else {
+                updateFeedbackData(entryId, 'upvote');
+            }
         }
     };
 
     // Function to handle downvote
-    const handleDownvote = async (entryId, currentDownvotes) => {
-        const { error } = await supabase
-            .from('entry')
-            .update({ downvote: currentDownvotes + 1 })
-            .eq('entry_id', entryId);
+    const handleDownvote = async (entryId, currentDownvotes, currentUpvotes) => {
+        if (!user) {
+            alert('You must be logged in to vote.');
+            return;
+        }
 
-        if (error) {
-            console.error('Error updating downvote:', error);
+        const currentVote = userVotes[entryId];
+
+        if (currentVote === 'downvote') {
+            // Undo the downvote
+            const { error: deleteError } = await supabase
+                .from('votes')
+                .delete()
+                .eq('user_id', user.id)
+                .eq('entry_id', entryId);
+
+            if (deleteError) {
+                console.error('Error removing downvote:', deleteError);
+                return;
+            }
+
+            const { error: updateError } = await supabase
+                .from('entry')
+                .update({ downvote: currentDownvotes - 1 })
+                .eq('entry_id', entryId);
+
+            if (updateError) {
+                console.error('Error updating downvote count:', updateError);
+                return;
+            }
+
+            // Update local state
+            setUserVotes(prevVotes => {
+                const { [entryId]: _, ...rest } = prevVotes;
+                return rest;
+            });
+
+            // Optimistically update feedbackData
+            updateFeedbackData(entryId, 'undo_downvote');
         } else {
-            fetchFeedback(); // Refresh feedback data to show updated votes
+            // Add or change to downvote
+            const { error: voteError } = await supabase
+                .from('votes')
+                .upsert([{ user_id: user.id, entry_id: entryId, vote_type: 'downvote' }]);
+
+            if (voteError) {
+                console.error('Error recording vote:', voteError);
+                return;
+            }
+
+            const { error: updateError } = await supabase
+                .from('entry')
+                .update({ 
+                    downvote: currentDownvotes + 1, 
+                    upvote: currentVote === 'upvote' ? currentUpvotes - 1 : currentUpvotes 
+                })
+                .eq('entry_id', entryId);
+
+            if (updateError) {
+                console.error('Error updating downvote count:', updateError);
+                return;
+            }
+
+            // Update local state
+            setUserVotes(prevVotes => ({ ...prevVotes, [entryId]: 'downvote' }));
+
+            // Optimistically update feedbackData
+            if (currentVote === 'upvote') {
+                updateFeedbackData(entryId, 'downvote');
+            } else {
+                updateFeedbackData(entryId, 'downvote');
+            }
         }
     };
 
     // Function to format the submitted_at timestamp (Month, Year) in UTC
     const formatDate = (dateString) => {
         const date = new Date(dateString);
-        return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: undefined, timeZone: 'UTC' });
+        return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', timeZone: 'UTC' });
     };
 
     return (
@@ -93,8 +298,8 @@ const CoursePage = () => {
 
             {Object.keys(feedbackData).map((section) => (
                 <div key={section} className="section">
-                    {feedbackData[section].map((entry, index) => (
-                        <div key={index} className="result-card">
+                    {feedbackData[section].map((entry) => (
+                        <div key={entry.entry_id} className="result-card">
                             <div className="entry-header">
                                 <h3>{entry.profiles.username}</h3>
                                 <span className="course-id">{entry.course_id}</span>
@@ -110,13 +315,24 @@ const CoursePage = () => {
                                 <p><strong>Submitted At:</strong> {formatDate(entry.submitted_at)}</p> 
                             </div>
                             <div className="vote-buttons">
-                                <button onClick={() => handleUpvote(entry.entry_id, entry.upvote)}>
+                                <button
+                                    className={userVotes[entry.entry_id] === 'upvote' ? 'upvoted' : ''}
+                                    onClick={() => handleUpvote(entry.entry_id, entry.upvote, entry.downvote)}
+                                >
                                     ↑ Upvote ({entry.upvote})
                                 </button>
-                                <button onClick={() => handleDownvote(entry.entry_id, entry.downvote)}>
+                                <button
+                                    className={userVotes[entry.entry_id] === 'downvote' ? 'downvoted' : ''}
+                                    onClick={() => handleDownvote(entry.entry_id, entry.downvote, entry.upvote)}
+                                >
                                     ↓ Downvote ({entry.downvote})
                                 </button>
                             </div>
+                            {userVotes[entry.entry_id] && (
+                                <p className="vote-status">
+                                    You have {userVotes[entry.entry_id]}d this entry.
+                                </p>
+                            )}
                         </div>
                     ))}
                 </div>

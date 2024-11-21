@@ -103,3 +103,18 @@
   color: #666;
   margin: 0;
 }
+
+/* In your Search.css file */
+button.upvoted {
+  background-color: #28a745;
+  color: white;
+}
+
+button.downvoted {
+  background-color: #dc3545;
+  color: white;
+}
+
+button:disabled {
+  opacity: 0.6;
+}
