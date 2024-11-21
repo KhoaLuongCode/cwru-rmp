@@ -31,10 +31,17 @@ const ProfessorPage = () => {
       setFeedbackData(data);
 
       if (data && data.length > 0) {
-        const totalQuality = data.reduce((acc, entry) => acc + entry.quality, 0);
-        const totalDifficulty = data.reduce((acc, entry) => acc + entry.difficulty, 0);
-        setAverageQuality(totalQuality / data.length);
-        setAverageDifficulty(totalDifficulty / data.length);
+        // Sort feedback data by `submitted_at` in descending order (most recent first)
+        const sortedData = data.sort((a, b) => new Date(b.submitted_at) - new Date(a.submitted_at));
+        setFeedbackData(sortedData);
+
+        // Calculate averages
+        const totalQuality = sortedData.reduce((acc, entry) => acc + entry.quality, 0);
+        const totalDifficulty = sortedData.reduce((acc, entry) => acc + entry.difficulty, 0);
+        setAverageQuality(totalQuality / sortedData.length);
+        setAverageDifficulty(totalDifficulty / sortedData.length);
+      } else {
+        setFeedbackData([]);
       }
     };
 
@@ -55,6 +62,7 @@ const ProfessorPage = () => {
             <div className="feedback-header">
               <h3>{entry.profiles?.username || 'Anonymous'}</h3>
               <span className="course-id">{entry.course_id}</span>
+              <span className="submitted-date">{new Date(entry.submitted_at).toLocaleString().split(',')[0]}</span>
             </div>
             <div className="feedback-body">
               <p><strong>Professor:</strong> {entry.professor_name}</p>
@@ -62,7 +70,6 @@ const ProfessorPage = () => {
                 <p><strong>Quality:</strong> {entry.quality}</p>
                 <p><strong>Difficulty:</strong> {entry.difficulty}</p>
                 <p><strong>Workload:</strong> {entry.workload}</p>
-                <p><strong>Course:</strong> {entry.course_id}</p>
               </div>
               <p className="feedback-comment"><strong>Comment:</strong> {entry.comment}</p>
               {/* Add more fields as needed */}
