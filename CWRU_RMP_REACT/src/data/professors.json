@@ -1,5 +1,5 @@
 [
-{
+  {
     "professor_id": "1",
     "first_name": "Harold",
     "last_name": "Connamacher",
@@ -12,5 +12,117 @@
     "last_name": "Koyturk",
     "department": "Computer Science and Data Science",
     "email": "mxk331@case.edu"
+  },
+  {
+    "professor_id": "3",
+    "first_name": "Dianne",
+    "last_name": "Foreback",
+    "department": "Computer and Data Sciences",
+    "email": "dianne.foreback@case.edu"
+  },
+  {
+    "professor_id": "4",
+    "first_name": "Erman",
+    "last_name": "Ayday",
+    "department": "Computer and Data Sciences",
+    "email": "erman.ayday@case.edu"
+  },
+  {
+    "professor_id": "6",
+    "first_name": "Sanmukh",
+    "last_name": "Kuppannagari",
+    "department": "Computer and Data Sciences",
+    "email": "sanmukh.kuppannagari@case.edu"
+  },
+  {
+    "professor_id": "7",
+    "first_name": "Michael",
+    "last_name": "Lewicki",
+    "department": "Computer and Data Sciences",
+    "email": "michael.lewicki@case.edu"
+  },
+  {
+    "professor_id": "8",
+    "first_name": "Jing",
+    "last_name": "Li",
+    "department": "Computer and Data Sciences",
+    "email": "jing.li@case.edu"
+  },
+  {
+    "professor_id": "9",
+    "first_name": "Vincenzo",
+    "last_name": "Liberatore",
+    "department": "Computer and Data Sciences",
+    "email": "vincenzo.liberatore@case.edu"
+  },
+  {
+    "professor_id": "10",
+    "first_name": "Jing",
+    "last_name": "Ma",
+    "department": "Computer and Data Sciences",
+    "email": "jing.ma5@case.edu"
+  },
+  {
+    "professor_id": "11",
+    "first_name": "Orhan",
+    "last_name": "Ozguner",
+    "department": "Computer and Data Sciences",
+    "email": "orhan.ozguner@case.edu"
+  },
+  {
+    "professor_id": "12",
+    "first_name": "H. Andy",
+    "last_name": "Podgurski",
+    "department": "Computer and Data Sciences",
+    "email": "andy.podgurski@case.edu"
+  },
+  {
+    "professor_id": "13",
+    "first_name": "Soumya",
+    "last_name": "Ray",
+    "department": "Computer and Data Sciences",
+    "email": "soumya.ray@case.edu"
+  },
+  {
+    "professor_id": "14",
+    "first_name": "An",
+    "last_name": "Wang",
+    "department": "Computer and Data Sciences",
+    "email": "an.wang@case.edu"
+  },
+  {
+    "professor_id": "15",
+    "first_name": "Andrew",
+    "last_name": "Watkins",
+    "department": "Computer and Data Sciences",
+    "email": "andrew.watkins@case.edu"
+  },
+  {
+    "professor_id": "16",
+    "first_name": "Yinghui",
+    "last_name": "Wu",
+    "department": "Computer and Data Sciences",
+    "email": "yinghui.wu@case.edu"
+  },
+  {
+    "professor_id": "17",
+    "first_name": "Kevin",
+    "last_name": "Xu",
+    "department": "Computer and Data Sciences",
+    "email": "kevin.xu@case.edu"
+  },
+  {
+    "professor_id": "18",
+    "first_name": "Shuai",
+    "last_name": "Xu",
+    "department": "Computer and Data Sciences",
+    "email": "shuai.xu@case.edu"
+  },
+  {
+    "professor_id": "19",
+    "first_name": "Yu",
+    "last_name": "Yin",
+    "department": "Computer and Data Sciences",
+    "email": "yu.yin@case.edu"
   }
 ]

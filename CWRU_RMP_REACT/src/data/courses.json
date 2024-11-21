@@ -72,6 +72,12 @@
       "course_description": "A course to improve programming skills, software quality, and the software development process. Software design; Version control; Control issues and routines; Pseudo-code programming process and developer testing; Defensive programming; Classes; Debugging; Self-documenting code; Refactoring. Offered as CSDS 293 and CSDS 293N."
     },
     {
+      "course_id": "CSDS391",
+      "course_name": "Introduction to Artificial Intelligence",
+      "department": "Computer Science",
+      "course_description": "This course is an introduction to artificial intelligence. We will study the concepts that underlie intelligent systems. Topics covered include problem solving with search, constraint satisfaction, adversarial games, knowledge representation and reasoning using propositional and first order logic, reasoning under uncertainty, introduction to machine learning, automated planning, reinforcement learning and natural language processing. Recommended: basic knowledge of probability and statistics."
+    },
+    {
       "course_id": "EBME105",
       "course_name": "Introduction to Biomedical Engineering",
       "department": "Biomedical Engineering",
