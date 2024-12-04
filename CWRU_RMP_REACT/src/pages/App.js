@@ -66,7 +66,11 @@ export default function Home() {
               <CoursePage session={session} /> : 
               <Navigate to="/auth" />
             } />
-          <Route path="/professor/:professorId" element={<ProfessorPage />} />
+          <Route path="/professor/:professorId" element={
+              session && session.user.email_confirmed_at ? 
+              <ProfessorPage session={session} /> : 
+              <Navigate to="/auth" />
+            } />
 
           <Route 
             path="/submit" 
