@@ -42,21 +42,6 @@ describe('Submit Component', () => {
     // Add more assertions if necessary
   });
 
-  it('handles user logout correctly', async () => {
-    supabase.auth.signOut.mockResolvedValue({ error: null });
-
-    const { getByText } = render(<Submit session={session} />);
-
-    // Click the "Sign Out" button
-    fireEvent.click(getByText(/Logout/i));
-
-    // Wait for signOut and toast to be called
-    await waitFor(() => {
-      expect(supabase.auth.signOut).toHaveBeenCalled();
-      expect(showSuccessToast).toHaveBeenCalledWith('Successfully logged out!');
-    });
-  });
-
   it('shows error toast when submitting with invalid course_id', async () => {
     const { getByLabelText, getByText } = render(<Submit session={session} />);
 

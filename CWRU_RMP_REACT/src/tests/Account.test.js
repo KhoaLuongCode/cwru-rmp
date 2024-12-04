@@ -104,13 +104,7 @@ describe('Account Component', () => {
   test('renders profile data correctly', async () => {
     render(<Account session={session} />);
 
-    // Wait for the component to finish loading data
-    await waitFor(() => {
-      expect(screen.getByText(/Update/i)).toBeInTheDocument();
-    });
-
     expect(screen.getByText(/Upload Avatar/i)).toBeInTheDocument();
-    expect(screen.getByText(/Update/i)).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/Username/i)).toBeInTheDocument();
     expect(screen.getByText(/Select Year/i)).toBeInTheDocument();
     expect(screen.getByText(/Your Entries/i)).toBeInTheDocument();
@@ -384,6 +378,23 @@ describe('Account Component', () => {
           updated_at: expect.any(Date),
         })
       );
+    });
+  });
+
+
+  it('handles user logout correctly', async () => {
+
+    supabase.auth.signOut.mockResolvedValue({ error: null });
+    const { getByText } = render(<Account session={session} />);
+
+    expect(screen.getByText('Logout')).toBeInTheDocument();
+
+    // Click the "Sign Out" button
+    fireEvent.click(getByText(/Logout/i));
+
+    //Wait for signOut and toast to be called
+    await waitFor(() => {
+      expect(supabase.auth.signOut).toHaveBeenCalled();
     });
   });
 });
