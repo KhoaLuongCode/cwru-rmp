@@ -337,9 +337,13 @@ export default function CoursePage({ session }) {
                                     <p><strong>Quality:</strong> {entry.quality}</p>
                                     <p><strong>Difficulty:</strong> {entry.difficulty}</p>
                                     <p><strong>Workload:</strong> {entry.workload}</p>
+                                    <p><strong>Semester:</strong> {entry.semester}</p>
                                 </div>
                                 <p className="comment"><strong>Comment:</strong> {entry.comment}</p>
-                                <p><strong>Submitted At:</strong> {formatDate(entry.submitted_at)}</p>
+                                <p><strong>Textbook:</strong> {entry.textbook}</p>
+                                <p><strong>Extra Credit:</strong> {entry.extra_credit}</p>
+                                <p><strong>Study Tips:</strong> {entry.study_tips}</p>
+                                <p>{formatDate(entry.submitted_at)}</p>
                             </div>
                             <div className="vote-buttons">
                                 <button
