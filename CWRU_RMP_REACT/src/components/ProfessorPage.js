@@ -341,7 +341,7 @@ export default function ProfessorPage({ session }) {
                                 </div>
                                 <p className="comment"><strong>Comment:</strong> {entry.comment}</p>
                                 <p><strong>Textbook:</strong> {entry.textbook}</p>
-                                <p><strong>Extra Credit:</strong> {entry.extra_credit}</p>
+                                <p><strong>Extra Credit:</strong> {entry.extra_credit ? "Yes" : "No"}</p>
                                 <p><strong>Study Tips:</strong> {entry.study_tips}</p>
                                 <p>{formatDate(entry.submitted_at)}</p>
                             </div>
