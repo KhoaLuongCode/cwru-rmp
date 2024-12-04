@@ -46,7 +46,6 @@ export default function Home() {
         <header className="App-header">
           <nav>
             <ul>
-              <li>Home</li>
               <li ><Link to="/search" style={{ color: 'white' }}>Search</Link></li>
               {session && session.user.email_confirmed_at && (
                 <li><Link to="/submit" style={{ color: 'white' }}>Submit Feedback</Link></li>
