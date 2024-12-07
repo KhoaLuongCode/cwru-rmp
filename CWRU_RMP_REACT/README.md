@@ -7,6 +7,11 @@ CWRU-RMP (Case Western Reserve University Rate My Professor) is a full-stack web
 
 ### Basic Instructions
 
+**Setup the Application:**
+   - Clone the repository and navigate to the project directory.
+   - Run `npm install` to install the necessary dependencies.
+   - Ensure you have proper credentials for the Supabase URL and API key (should be included already)
+
 The app requires users to be logged in. Follow these steps to get started:
 
 1. **Log-In and Sign-Up:**  
