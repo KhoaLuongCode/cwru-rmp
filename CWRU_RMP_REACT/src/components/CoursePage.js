@@ -287,7 +287,7 @@ export default function CoursePage({ session }) {
         }
     };
 
-
+    //handle submit report
     const handleReportSubmit = async (closePopup) => {
         if (!reportReason.trim()) {
             alert('Please provide a reason for reporting.');

@@ -10,6 +10,7 @@ export default function Account({ session }) {
   const [entries, setEntries] = useState([]);
 
   const handleLogout = async () => {
+    //handle signout 
     await supabase.auth.signOut();
     showSuccessToast('Successfully logged out!');
   };
@@ -60,6 +61,7 @@ export default function Account({ session }) {
     return new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).format(date);
   };
 
+  //handle update
   const updateProfile = async (updates) => {
     try {
       setLoading(true);
@@ -72,6 +74,7 @@ export default function Account({ session }) {
         updated_at: new Date(),
       };
 
+      //errors
       const { error } = await supabase.from('profiles').upsert(profileUpdates);
       if (error) {
         if (error.message.includes("duplicate key value violates unique constraint \"profiles_username_key\"")) {
@@ -93,6 +96,7 @@ export default function Account({ session }) {
     }
   };
 
+  //handle delete 
   const deleteEntry = async (entryId) => {
     try {
       const { user } = session;

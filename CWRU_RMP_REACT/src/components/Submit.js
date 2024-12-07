@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
-import coursesData from '../data/courses.json'; // Import the courses JSON
+import coursesData from '../data/courses.json';
 import '../css/Submit.css';
-import { showSuccessToast, showErrorToast } from '../utils/Toastr'; // Import toast functions
+import { showSuccessToast, showErrorToast } from '../utils/Toastr'; 
 import professorData from '../data/professors.json';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -53,7 +53,7 @@ export default function Submit({ session }) {
       return;
     }
 
-    // Convert numeric and boolean string values to appropriate data types
+    // Convert to appropriate data types
     const dataToInsert = {
       ...formData,
       quality: Number(formData.quality),
