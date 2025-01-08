@@ -1,5 +1,6 @@
 // Home.js
 import '../css/App.css'
+import logo from '../assets/logo.avif'
 import 'react-toastify/dist/ReactToastify.css'
 import { useState, useEffect } from 'react'
 import { supabase } from '../supabaseClient'
@@ -44,13 +45,14 @@ export default function Home() {
       <div className="container">
       <BrowserRouter>
         <header className="App-header">
+          <img src={logo} alt="logo" className="header-logo" />
           <nav>
             <ul>
-              <li ><Link to="/search" style={{ color: 'white' }}>Search</Link></li>
+              <li ><Link to="/search" style={{ color: 'white', fontWeight: 'bold' }}>Search</Link></li>
               {session && session.user.email_confirmed_at && (
-                <li><Link to="/submit" style={{ color: 'white' }}>Submit Feedback</Link></li>
+                <li><Link to="/submit" style={{ color: 'white', fontWeight: 'bold' }}>Submit Feedback</Link></li>
               )}
-              <li><Link to="/auth" style={{ color: 'white' }}>
+              <li><Link to="/auth" style={{ color: 'white', fontWeight: 'bold' }}>
               {session && session.user.email_confirmed_at ? 'Profile' : 'Login'}
               </Link></li>
             </ul>

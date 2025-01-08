@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
-import "../css/Search.css";
+import "../css/Professor.css";
 
 export default function ProfessorPage({ session }) {
     const { professorId } = useParams();
@@ -326,7 +326,7 @@ export default function ProfessorPage({ session }) {
             {Object.keys(feedbackData).map((section) => (
                 <div key={section} className="section">
                     {feedbackData[section].map((entry) => (
-                        <div key={entry.entry_id} className="result-card">
+                        <div key={entry.entry_id} className="feedback-entry">
                             <div className="entry-header">
                                 <h3>{entry.profiles.username}</h3>
                                 <span className="course-id">{entry.course_id}</span>

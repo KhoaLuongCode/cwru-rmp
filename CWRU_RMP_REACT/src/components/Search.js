@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { supabase } from '../supabaseClient'
+import { supabase } from '../supabaseClient';
 import '../css/Search.css';
 import { useNavigate } from 'react-router-dom';
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchType, setSearchType] = useState('professor'); // "professor" or "course"
+  const [searchType, setSearchType] = useState('professor'); // default to professor
   const [results, setResults] = useState([]);
+  const navigate = useNavigate();
 
   const handleSearch = async () => {
     if (searchType === "course") {
@@ -23,7 +24,7 @@ const Search = () => {
       .ilike('course_id', `%${searchTerm.replace(/\s+/g, '')}%`);
 
     if (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching courses:", error);
     } else {
       setResults(data);
     }
@@ -36,14 +37,13 @@ const Search = () => {
       .or(`first_name.ilike.%${searchTerm}%,last_name.ilike.%${searchTerm}%`);
 
     if (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching professors:", error);
     } else {
       setResults(data);
     }
   };
 
-  const navigate = useNavigate();
-
+  // Card click handlers
   const handleCourseCardClick = (courseId) => {
     navigate(`/course/${courseId}`);
   };
@@ -53,11 +53,7 @@ const Search = () => {
     navigate(`/professor/${formattedName}`);
   };
 
-  const handleToggle = () => {
-    setSearchType((prevType) => (prevType === 'professor' ? 'course' : 'professor'));
-    setResults([]);
-  };
-
+  // Trigger search on Enter
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
       handleSearch();
@@ -66,27 +62,43 @@ const Search = () => {
 
   return (
     <div className="search-page">
-      <h1>CWRU-RMP</h1>
-      <div className="search-container">
-        <button onClick={handleToggle}>
-          Search by {searchType === 'professor' ? 'Course' : 'Professor'} instead
-        </button>
+      <h1 className="search-title">CWRU - Rate My Professor</h1>
 
+      {/* Toggle text to pick search type */}
+      <div className="search-type-toggle">
+        <p
+          className={`toggle-option ${searchType === 'professor' ? 'active' : ''}`}
+          onClick={() => setSearchType('professor')}
+        >
+          I'd like to look up a professor by name
+        </p>
+        <p
+          className={`toggle-option ${searchType === 'course' ? 'active' : ''}`}
+          onClick={() => setSearchType('course')}
+        >
+          I'd like to search by course
+        </p>
+      </div>
+
+      {/* Search input and button */}
+      <div className="search-container">
         <input
           type="text"
-          placeholder={`Search for ${searchType === 'professor' ? 'professor name' : 'course ID'}...`}
+          placeholder={`Search for a ${searchType === 'professor' ? 'professor' : 'course ID'}...`}
           value={searchTerm}
-          onChange={(e) => {
-            setSearchTerm(e.target.value)
-          }}
+          onChange={(e) => setSearchTerm(e.target.value)}
           onKeyDown={handleKeyPress}
         />
-        <button className="search-button" onClick={handleSearch}>Search</button>
+        <button className="search-button" onClick={handleSearch}>
+          Search
+        </button>
       </div>
+
+      {/* Results */}
       <div className="results-container">
         {results.length > 0 ? (
           results.map((result, index) => (
-            <button
+            <div
               key={index}
               className="result-card"
               onClick={() => {
@@ -100,10 +112,10 @@ const Search = () => {
               {searchType === "course"
                 ? result.course_id
                 : `${result.first_name} ${result.last_name}`}
-            </button>
+            </div>
           ))
         ) : (
-          <button className="result-card">No results</button>
+          <p className="no-results">No results found.</p>
         )}
       </div>
     </div>

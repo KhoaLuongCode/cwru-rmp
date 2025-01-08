@@ -1,120 +1,105 @@
-/* Search.css */
-
-/* Existing styles */
-.search-container {
-  display: flex;
-  justify-content: center;
-  padding: 10px;
-}
-
-.search-box {
-  display: flex;
-  align-items: center;
-  gap: 10px; 
-}
-
-.search-box input {
-  padding: 8px;
-  font-size: 16px;
-}
-
+/* Container for the entire page */
 .search-page {
-  text-align: left;
-  padding: 100px;
-  /* TODO: Add background image styles here */
-  background-size: cover;
-  background-position: center;
-  color: black; 
-  background-color: white;
-  height: auto; 
+  padding: 60px;
   min-height: 100vh;
-}
-
-.search-button {
-  background-color: rgb(0, 122, 184);
-  border: none;
-  margin: 15px;
-  padding: 15px 32px;
-  border-radius: 25px;
-}
-
-.result-card {
-  /* Updated Styles */
   background-color: #fff;
-  border: 1px solid #e1e1e1;
-  border-radius: 8px; /* Increased border-radius for smoother corners */
-  padding: 20px; /* Increased padding for better spacing */
-  margin-bottom: 20px; /* More space between cards */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  transition: box-shadow 0.3s, transform 0.3s; /* Smooth transition for hover effects */
+  color: #333;
+  text-align: center;
+}
+
+.search-title {
+  margin-bottom: 40px;
+  font-weight: bold;
+}
+
+/* Search type toggle container */
+.search-type-toggle {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin-bottom: 20px;
+}
+
+/* Toggle option styling: no box, no shadow, bold on hover or active */
+.toggle-option {
+  font-size: 16px;
   cursor: pointer;
+  color: #003071;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  transition: font-weight 0.2s;
+}
+.toggle-option:hover {
+  font-weight: bold;
+}
+.toggle-option.active {
+  font-weight: bold;
+}
+
+/* Search container */
+.search-container {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 40px;
+}
+
+.search-container input {
+  width: 280px;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.search-button {
+  background-color: #003071;
+  color: #fff;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.search-button:hover {
+  background-color: #00235e;
+}
+
+/* Results container */
+.results-container {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+/* Result card with box + shadow, but "less fat" (reduced padding/margin) */
+.result-card {
+  background-color: #fff;
+  border: 1px solid #e1e1e1;
+  border-radius: 6px;
+  padding: 10px;       /* Reduced from 20px */
+  margin-bottom: 10px; /* Reduced from 20px */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: box-shadow 0.3s, transform 0.3s;
 }
 
 .result-card:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transform: translateY(-5px); /* Slight lift on hover */
+  transform: translateY(-3px);
 }
 
-.result-card h3 {
-  margin: 0 0 10px 0;
-  color: #333;
-  font-size: 1.2em;
-}
-
-.result-card .course-id {
-  background-color: #f0f0f0;
-  padding: 5px 10px;
-  border-radius: 4px;
-  font-size: 0.9em;
-  color: #777;
-  display: inline-block;
-}
-
-.result-card p {
-  margin: 5px 0;
-  color: #555;
-  font-size: 0.95em;
-}
-
-.result-card .entry-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.result-card .entry-body {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.result-card .ratings {
-  display: flex;
-  gap: 15px;
-  font-size: 0.9em;
-  color: #555;
-}
-
-.result-card .comment {
-  font-size: 0.9em;
-  color: #666;
-  margin: 0;
-}
-
-/* In your Search.css file */
-button.upvoted {
-  background-color: #28a745;
-  color: white;
-}
-
-button.downvoted {
-  background-color: #dc3545;
-  color: white;
-}
-
-button:disabled {
-  opacity: 0.6;
+/* For no results text */
+.no-results {
+  color: #999;
+  font-style: italic;
+  margin-top: 40px;
+  text-align: center;
 }

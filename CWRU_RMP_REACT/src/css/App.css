@@ -1,3 +1,5 @@
+/* App.css */
+
 .App {
   text-align: center;
 }
@@ -14,29 +16,67 @@
 }
 
 .App-header {
-  background-color: rgb(9, 20, 58);
+  background-color: #003071;
   background-size: cover;
   color: #fff;
   text-align: center;
-  padding: 1rem;
+  padding: 0; /* Removed padding to allow logo to fill the header */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 100px; /* Adjust the height as needed */
 }
 
-nav{
+nav {
   list-style-type: none;
   padding: 0;
   display: flex;
-  color:white;
   justify-content: flex-end;
+  position: absolute;
+  right: 20px; /* Position the nav to the right */
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-nav ul li {
-  display: inline;
-  margin-left: 10px;
-  color:#fff;
+nav ul {
+  display: flex;
+  gap: 15px; /* Space between navigation items */
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+}
+
+.auth-link-container {
+  margin: 10px 20px; /* Adjust spacing as needed */
+  text-align: right;
+}
+
+.auth-link {
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+}
+
+.header-logo {
+  height: 100%; /* Make the logo fill the header's height */
+  width: auto; /* Maintain aspect ratio */
 }
 
 .App-link {
-  color:#fff;
+  color: #fff;
 }
 
 @keyframes App-logo-spin {
